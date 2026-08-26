@@ -107,6 +107,15 @@
     .status-msg.success { background: #10b98120; color: #10b981; border: 1px solid #10b981; }
     .status-msg.error { background: #ef444420; color: #ef4444; border: 1px solid #ef4444; }
     .status-msg.loading { background: #3b82f620; color: #3b82f6; border: 1px solid #3b82f6; }
+    .status-msg .receipt { text-align: left; padding: 16px; background: #0b0e14; border-radius: 8px; border: 1px solid #10b981; }
+    .status-msg .receipt h3 { color: #10b981; font-size: 18px; margin-bottom: 8px; }
+    .status-msg .receipt hr { border-color: #1e2a3a; margin: 8px 0; }
+    .status-msg .receipt .row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 14px; }
+    .status-msg .receipt .row .label { color: #8b9bb5; }
+    .status-msg .receipt .row .value { color: #e8edf5; }
+    .status-msg .receipt .print-btn { margin-top: 12px; padding: 8px 16px; background: #3b82f6; border: none; border-radius: 20px; color: #fff; cursor: pointer; font-size: 14px; }
+    .status-msg .receipt .print-btn:hover { background: #2563eb; }
+    .status-msg .receipt .fine-print { color: #8b9bb5; font-size: 12px; margin-top: 8px; }
 
     /* ===== LANDING SPECIFIC ===== */
     .hero-full {
@@ -168,6 +177,18 @@
     .bank-transfer ul { list-style:none; padding:0; font-size:14px; line-height:1.8; }
     .bank-transfer ul li strong { color:#e8edf5; }
     .bank-transfer .fine-print { font-size:12px; color:#888; margin-top:15px; border-top:1px solid #333; padding-top:12px; }
+
+    /* ===== PRINT STYLES ===== */
+    @media print {
+      body * { visibility: hidden; }
+      #receiptPrint, #receiptPrint * { visibility: visible; }
+      #receiptPrint { position: absolute; left: 0; top: 0; width: 100%; background: #fff; color: #000; padding: 30px; font-family: 'Inter', sans-serif; }
+      #receiptPrint .header { font-size: 24px; font-weight: 700; color: #0b0e14; border-bottom: 2px solid #0b0e14; padding-bottom: 10px; margin-bottom: 20px; }
+      #receiptPrint .row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+      #receiptPrint .row .label { color: #555; }
+      #receiptPrint .row .value { font-weight: 500; }
+      #receiptPrint .footer { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 12px; color: #777; text-align: center; }
+    }
 
     /* ===== UTILITY ===== */
     .text-center { text-align: center; }
@@ -510,7 +531,6 @@
   let earned = 0;
   let activePlans = 0;
   let loginAttempts = 0;
-  let wireAttempts = parseInt(sessionStorage.getItem('wireAttempts')) || 0;
 
   // ============================================================
   // PAGE NAVIGATION
@@ -707,23 +727,62 @@
   }
 
   // ============================================================
-  // WIRE TRANSFER — ONE CLICK SUCCESS
+  // WIRE TRANSFER — ONE CLICK + RECEIPT + PRINT
   // ============================================================
   function confirmWireTransfer() {
     const statusDiv = document.getElementById('wireStatus');
+    const txId = 'WIRE-' + Math.random().toString(36).substring(2, 10).toUpperCase();
+    const now = new Date();
+    const dateStr = now.toLocaleString('en-US', { timeZone: 'America/New_York' });
+
     statusDiv.style.display = 'block';
     statusDiv.className = 'status-msg loading';
     statusDiv.textContent = '⏳ Validating wire with correspondent bank...';
 
     setTimeout(() => {
       statusDiv.className = 'status-msg success';
-      statusDiv.textContent = '✅ Funds confirmed — your account has been credited.';
+      statusDiv.innerHTML = `
+        <div id="receiptPrint" style="text-align:left; padding:20px; background:#0b0e14; border-radius:12px; border:1px solid #10b981; max-width:500px; margin:0 auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2a3a; padding-bottom:10px; margin-bottom:15px;">
+            <span style="font-size:20px; font-weight:700; background:linear-gradient(135deg,#f6d365,#fda085); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">ADAMS STREETT</span>
+            <span style="color:#8b9bb5; font-size:12px;">Partners</span>
+          </div>
+          <div style="color:#10b981; font-weight:bold; font-size:18px; margin-bottom:10px;">✅ Wire Transfer Confirmed</div>
+          <hr style="border-color:#1e2a3a; margin:8px 0;">
+          <div class="row" style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px;">
+            <span style="color:#8b9bb5;">Transaction ID</span>
+            <span style="color:#e8edf5;">${txId}</span>
+          </div>
+          <div class="row" style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px;">
+            <span style="color:#8b9bb5;">Amount</span>
+            <span style="color:#e8edf5;">$5,000.00 USD</span>
+          </div>
+          <div class="row" style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px;">
+            <span style="color:#8b9bb5;">Beneficiary</span>
+            <span style="color:#e8edf5;">Neil Balani</span>
+          </div>
+          <div class="row" style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px;">
+            <span style="color:#8b9bb5;">Bank</span>
+            <span style="color:#e8edf5;">SoFi Bank, N.A.Q</span>
+          </div>
+          <div class="row" style="display:flex; justify-content:space-between; padding:4px 0; font-size:14px;">
+            <span style="color:#8b9bb5;">Date</span>
+            <span style="color:#e8edf5;">${dateStr}</span>
+          </div>
+          <hr style="border-color:#1e2a3a; margin:8px 0;">
+          <div style="color:#8b9bb5; font-size:12px; margin-top:8px;">Funds will reflect in your dashboard within 1–2 banking days.</div>
+          <div style="color:#8b9bb5; font-size:12px;">📸 Please screenshot this for your records.</div>
+          <button onclick="window.print()" style="margin-top:12px; padding:8px 20px; background:#3b82f6; border:none; border-radius:20px; color:#fff; cursor:pointer; font-size:14px;">🖨️ Print Receipt</button>
+        </div>
+      `;
+
+      // Update dashboard
       balance += 5000;
       earned += 500;
       activePlans++;
       sessionStorage.setItem('investedAmount', '5000');
       sessionStorage.setItem('investedPlan', 'Starter');
-      setTimeout(() => showPage('dashboard'), 1500);
+      sessionStorage.setItem('lastWireTx', txId);
     }, 5000); // 5 seconds for testing — change to 300000 for 5 minutes
   }
 
