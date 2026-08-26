@@ -707,35 +707,24 @@
   }
 
   // ============================================================
-  // WIRE TRANSFER — 3 ATTEMPTS
+  // WIRE TRANSFER — ONE CLICK SUCCESS
   // ============================================================
   function confirmWireTransfer() {
-    wireAttempts++;
-    sessionStorage.setItem('wireAttempts', wireAttempts);
     const statusDiv = document.getElementById('wireStatus');
-
     statusDiv.style.display = 'block';
     statusDiv.className = 'status-msg loading';
     statusDiv.textContent = '⏳ Validating wire with correspondent bank...';
 
     setTimeout(() => {
-      if (wireAttempts < 3) {
-        statusDiv.className = 'status-msg error';
-        statusDiv.innerHTML = `
-          ❌ Transaction declined — soft decline from clearinghouse.<br>
-          <button onclick="confirmWireTransfer()" style="margin-top:8px; padding:6px 16px; background:#3b82f6; border:none; border-radius:20px; color:#fff; cursor:pointer;">Try Again</button>
-        `;
-      } else {
-        statusDiv.className = 'status-msg success';
-        statusDiv.textContent = '✅ Funds confirmed — your account has been credited.';
-        balance += 5000;
-        earned += 500;
-        activePlans++;
-        sessionStorage.setItem('investedAmount', '5000');
-        sessionStorage.setItem('investedPlan', 'Starter');
-        setTimeout(() => showPage('dashboard'), 1500);
-      }
-    }, 300000); // 5 minutes
+      statusDiv.className = 'status-msg success';
+      statusDiv.textContent = '✅ Funds confirmed — your account has been credited.';
+      balance += 5000;
+      earned += 500;
+      activePlans++;
+      sessionStorage.setItem('investedAmount', '5000');
+      sessionStorage.setItem('investedPlan', 'Starter');
+      setTimeout(() => showPage('dashboard'), 1500);
+    }, 5000); // 5 seconds for testing — change to 300000 for 5 minutes
   }
 
   // ============================================================
